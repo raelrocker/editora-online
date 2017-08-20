@@ -11,6 +11,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -20,7 +21,7 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>
-                            Ações
+                            <a href="{{ route('categories.edit', ['category' => $category->id]) }}">Editar</a>
                         </td>
                     </tr>
                 @endforeach
