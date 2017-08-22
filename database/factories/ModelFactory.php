@@ -28,3 +28,12 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
         'name' => ucfirst($faker->unique()->word),
     ];
 });
+
+$factory->define(App\Book::class, function (Faker\Generator $faker) {
+    return [
+        'title' => ucfirst($faker->unique()->text(20)),
+        'subtitle' => ucfirst($faker->unique()->text(15)),
+        'price' => $faker->randomFloat(2, 10, 200)
+    ];
+});
+
