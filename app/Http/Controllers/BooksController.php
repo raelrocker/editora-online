@@ -40,38 +40,33 @@ class BooksController extends Controller
         return redirect()->route('books.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Book $book
      * @return \Illuminate\Http\Response
+     * @internal param Book $books
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Book $book)
     {
-        //
+        return view('book.edit', compact('book'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param Book $book
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Book $book)
     {
-        //
+        $book->fill($request->all());
+        $book->save();
+        return redirect()->route('books.index');
     }
 
     /**

@@ -2,20 +2,30 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Ediar Categoria</h3>
-            {!! Form::model($category, [
-                'route' => ['categories.update', 'category' => $category->id],
+            <h3>Editar Livro</h3>
+            {!! Form::model($book, [
+                'route' => ['books.update', 'book' => $book->id],
                 'class' => 'form',
                 'method' => 'PUT'
             ]) !!}
 
             <div class="form-group">
-                {!! Form::label('name', 'Nome') !!}
-                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                {!! Form::label('title', 'Title') !!}
+                {!! Form::text('title', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::submit('Criar categoria', ['class' => 'btn btn-primary']) !!}
+                {!! Form::label('subtitle', 'Subtitle') !!}
+                {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('price', 'Price') !!}
+                {!! Form::text('price', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::submit('Salvar livro', ['class' => 'btn btn-primary']) !!}
             </div>
 
             {!! Form::close() !!}

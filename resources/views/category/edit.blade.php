@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Ediar Categoria</h3>
+            <h3>Editar Categoria</h3>
             {!! Form::model($category, [
                 'route' => ['categories.update', 'category' => $category->id],
                 'class' => 'form',
@@ -15,7 +15,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::submit('Criar categoria', ['class' => 'btn btn-primary']) !!}
+                {!! Form::submit('Salvar categoria', ['class' => 'btn btn-primary']) !!}
             </div>
 
             {!! Form::close() !!}
