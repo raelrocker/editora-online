@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <h3>Novo Livro</h3>
-            {!! Form::open(['route' => 'livros.store', 'class' => 'form']) !!}
+            {!! Form::open(['route' => 'books.store', 'class' => 'form']) !!}
 
             <div class="form-group">
                 {!! Form::label('title', 'Title') !!}
