@@ -5,24 +5,27 @@
             <h3>Novo Livro</h3>
             {!! Form::open(['route' => 'books.store', 'class' => 'form']) !!}
 
-            <div class="form-group">
+            {!! Html::openFormGroup('title', $errors) !!}
                 {!! Form::label('title', 'Title') !!}
                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
-            </div>
+                {!! Form::error('title', $errors) !!}
+            {!! Html::closeFormGroup() !!}
 
-            <div class="form-group">
+            {!! Html::openFormGroup('subtitle', $errors) !!}
                 {!! Form::label('subtitle', 'Subtitle') !!}
                 {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
-            </div>
+                {!! Form::error('subtitle', $errors) !!}
+            {!! Html::closeFormGroup() !!}
 
-            <div class="form-group">
+            {!! Html::openFormGroup('price', $errors) !!}
                 {!! Form::label('price', 'Price') !!}
                 {!! Form::text('price', null, ['class' => 'form-control']) !!}
-            </div>
+                {!! Form::error('price', $errors) !!}
+            {!! Html::closeFormGroup() !!}
 
-            <div class="form-group">
+            {!! Html::openFormGroup() !!}
                 {!! Form::submit('Criar Livro', ['class' => 'btn btn-primary']) !!}
-            </div>
+            {!! Html::closeFormGroup() !!}
 
             {!! Form::close() !!}
         </div>
