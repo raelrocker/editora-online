@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BookRequest extends FormRequest
 {
@@ -13,7 +14,16 @@ class BookRequest extends FormRequest
      */
     public function authorize()
     {
+        $book = $this->route('book');
+        $id = $book ? $book->id : null;
+        if (is_null($id))
+            return false;
+
+        if ($id != Auth::user()->id)
+            return false;
+
         return true;
+
     }
 
     /**
@@ -26,7 +36,8 @@ class BookRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'subtitle' => 'required|max:255',
-            'price' => 'required'
+            'price' => 'required',
+            'user_id' => 'required'
         ];
     }
 }

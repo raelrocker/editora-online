@@ -24,6 +24,7 @@
             {!! Html::closeFormGroup() !!}
 
             {!! Html::openFormGroup() !!}
+                {!! Form::hidden('user_id', Auth::user()->id) !!}
                 {!! Form::submit('Criar Livro', ['class' => 'btn btn-primary']) !!}
             {!! Html::closeFormGroup() !!}
 

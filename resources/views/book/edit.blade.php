@@ -28,6 +28,7 @@
             {!! Html::closeFormGroup() !!}
 
             {!! Html::openFormGroup() !!}
+                {!! Form::hidden('user_id', null) !!}
                 {!! Form::submit('Salvar Livro', ['class' => 'btn btn-primary']) !!}
             {!! Html::closeFormGroup() !!}
 
