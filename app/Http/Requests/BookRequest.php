@@ -14,8 +14,15 @@ class BookRequest extends FormRequest
      */
     public function authorize()
     {
-        $book = $this->route('book');
-        $id = $book ? $book->id : null;
+        $id = 0;
+        if ($this->isMethod('put')) {
+            $book = $this->route('book');
+            $id = $book->user ? $book->user->id : null;
+        } else if ($this->isMethod('post'))
+        {
+            $id = $this->get('user_id');
+        }
+
         if (is_null($id))
             return false;
 

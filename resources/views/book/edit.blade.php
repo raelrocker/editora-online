@@ -21,6 +21,11 @@
                 {!! Form::error('subtitle', $errors) !!}
             {!! Html::closeFormGroup() !!}
 
+            {!! Html::openFormGroup('author', $errors) !!}
+                {!! Form::label('author', 'Author') !!}
+                {!! Form::text('author', $book->user->name, ['class' => 'form-control', 'readonly' => 'true']) !!}
+            {!! Html::closeFormGroup() !!}
+
             {!! Html::openFormGroup('price', $errors) !!}
                 {!! Form::label('price', 'Price') !!}
                 {!! Form::text('price', null, ['class' => 'form-control']) !!}
