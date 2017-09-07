@@ -33,7 +33,8 @@ $factory->define(App\Book::class, function (Faker\Generator $faker) {
     return [
         'title' => ucfirst($faker->unique()->text(20)),
         'subtitle' => ucfirst($faker->unique()->text(15)),
-        'price' => $faker->randomFloat(2, 10, 200)
+        'price' => $faker->randomFloat(2, 10, 200),
+        'user_id' => rand(1, 2)
     ];
 });
 
