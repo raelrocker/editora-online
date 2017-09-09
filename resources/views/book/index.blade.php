@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <h3>Listagem de livros</h3>
-            <a href="{{ route('books.create') }}" class="btn btn-primary">Novo Livro</a>
+            {!! Button::primary('Novo livro')->asLinkTo('books.create') !!}
         </div>
         <div class="row">
             <table class="table table-striped">
