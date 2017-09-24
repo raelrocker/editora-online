@@ -9,7 +9,7 @@
                  @include('category._form')
 
                 {!! Html::openFormGroup() !!}
-                    {!! Button::primary('Criar categoria')->submit() !!}
+                        {!! Button::primary('Criar categoria')->submit() !!}
                 {!! Html::closeFormGroup() !!}
 
             {!! Form::close() !!}
