@@ -2,7 +2,9 @@
 
 namespace CodePub\Http\Controllers;
 
+use CodePub\Http\Requests\BookCreateRequest;
 use CodePub\Http\Requests\BookRequest;
+use CodePub\Http\Requests\BookUpdateRequest;
 use CodePub\Repositories\BookRepository;
 use Illuminate\Http\Request;
 
@@ -46,10 +48,10 @@ class BooksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param BookRequest|Request $request
+     * @param BookCreateRequest|BookRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BookRequest $request)
+    public function store(BookCreateRequest $request)
     {
         $this->repository->create($request->all());
         $url = $request->get('redirect_to', route('books.index'));
@@ -76,13 +78,13 @@ class BooksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param BookRequest|Request $request
+     * @param BookRequest|BookUpdateRequest|Request $request
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param Book $book
      * @internal param int $id
      */
-    public function update(BookRequest $request, $id)
+    public function update(BookUpdateRequest $request, $id)
     {
         $this->repository->update($request->all(), $id);
         $url = $request->get('redirect_to', route('books.index'));
