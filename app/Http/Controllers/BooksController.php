@@ -53,7 +53,9 @@ class BooksController extends Controller
      */
     public function store(BookCreateRequest $request)
     {
-        $this->repository->create($request->all());
+        $data = $request->all();
+        $data['user_id'] = \Auth::user()->id;
+        $this->repository->create($data);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Livro cadastrado com sucesso.');
         return redirect()->to($url);
@@ -86,7 +88,8 @@ class BooksController extends Controller
      */
     public function update(BookUpdateRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $data = $request->except(['user_id']);
+        $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Livro alterado com sucesso.');
         return redirect()->to($url);

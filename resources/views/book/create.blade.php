@@ -8,7 +8,6 @@
             @include('book._form')
 
             {!! Html::openFormGroup() !!}
-                {!! Form::hidden('user_id', Auth::user()->id) !!}
                 {!! Button::primary('Criar livro')->submit() !!}
             {!! Html::closeFormGroup() !!}
 
