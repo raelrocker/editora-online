@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(\CodePub\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -23,13 +23,13 @@ $factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
+$factory->define(CodePub\Models\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => ucfirst($faker->unique()->word),
     ];
 });
 
-$factory->define(\App\Models\Book::class, function (Faker\Generator $faker) {
+$factory->define(\CodePub\Models\Book::class, function (Faker\Generator $faker) {
     return [
         'title' => ucfirst($faker->unique()->text(20)),
         'subtitle' => ucfirst($faker->unique()->text(15)),

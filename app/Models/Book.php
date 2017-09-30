@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace CodePub\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ class Book extends Model implements TableInterface
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('CodePub\Models\User');
     }
 
     /**

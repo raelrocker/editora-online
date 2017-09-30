@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Repositories;
+namespace CodePub\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Models\Book;
+use CodePub\Models\Book;
 
 /**
  * Class BookRepositoryEloquent
- * @package namespace App\Repositories;
+ * @package namespace CodePub\Repositories;
  */
 class BookRepositoryEloquent extends BaseRepository implements BookRepository
 {

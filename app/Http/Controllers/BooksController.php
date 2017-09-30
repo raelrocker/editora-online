@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodePub\Http\Controllers;
 
-use App\Http\Requests\BookRequest;
-use App\Repositories\BookRepository;
+use CodePub\Http\Requests\BookRequest;
+use CodePub\Repositories\BookRepository;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller

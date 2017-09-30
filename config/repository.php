@@ -227,7 +227,7 @@ return [
     */
     'generator'  => [
         'basePath'      => app_path(),
-        'rootNamespace' => 'App\\',
+        'rootNamespace' => 'CodePub\\',
         'stubsOverridePath' => app_path(),
         'paths'         => [
             'models'       => 'Models',

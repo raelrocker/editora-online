@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodePub\Http\Controllers;
 
-use App\Models\Category;
-use App\Http\Requests\CategoryRequest;
-use App\Repositories\CategoryRepository;
+use CodePub\Models\Category;
+use CodePub\Http\Requests\CategoryRequest;
+use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
