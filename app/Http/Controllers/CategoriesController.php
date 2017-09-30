@@ -2,6 +2,7 @@
 
 namespace CodePub\Http\Controllers;
 
+use CodePub\Criteria\FindByNameCriteria;
 use CodePub\Models\Category;
 use CodePub\Http\Requests\CategoryRequest;
 use CodePub\Repositories\CategoryRepository;
@@ -24,12 +25,16 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+        $this->repository
+            ->pushCriteria(new FindByNameCriteria($search));
         $categories = $this->repository->paginate(10);
-        return view('category.index', compact('categories'));
+        return view('category.index', compact('categories', 'search'));
     }
 
     /**
