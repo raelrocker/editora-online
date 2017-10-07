@@ -17,6 +17,20 @@ class BookRepositoryEloquent extends BaseRepository implements BookRepository
         'user.name' => 'like'
     ];
 
+    public function create(array $attributes)
+    {
+        $model = parent::create($attributes);
+        $model->categories()->sync($attributes['categories']);
+        return $model;
+    }
+
+    public function update(array $attributes, $id)
+    {
+        $model = parent::update($attributes, $id);
+        $model->categories()->sync($attributes['categories']);
+        return $model;
+    }
+
     /**
      * Specify Model class name
      *
