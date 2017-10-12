@@ -2,8 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Listagem de livros</h3>
-            {!! Button::primary('Novo livro')->asLinkTo(route('books.create')) !!}
+            <h3>Lixeira de livros</h3>
         </div>
         <br>
         <div class="row">
@@ -26,7 +25,7 @@
                                     'route' => ['books.destroy', 'book' => $book->id],
                                     'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display: none']) .
                                 Form::close();
-                         $anchorDestroy = Button::link('Ir para a lixeira')->asLinkTo($linkDestroy)
+                         $anchorDestroy = Button::link('Excluir')->asLinkTo($linkDestroy)
                                             ->addAttributes([
                                                 'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteForm}\").submit();"
                                             ]);
