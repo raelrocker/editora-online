@@ -6,6 +6,7 @@ namespace CodePub\Http\Controllers;
 use CodePub\Models\Book;
 use CodePub\Repositories\BookRepository;
 use Illuminate\Http\Request;
+use CodePub\Criteria\FindOnlyTrashedCriteria;
 
 class BooksTrashedController extends Controller
 {
@@ -32,10 +33,7 @@ class BooksTrashedController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $books = Book::onlyTrashed()->paginate(10);
-        //$this->repository
-        //    ->pushCriteria(new FindByTitleCriteria($search));
-        //$books = $this->repository->paginate(10);
+        $books = $this->repository->onlyTrashed()->paginate(10);
         return view('trashed.book.index', compact('books', 'search'));
     }
 }
