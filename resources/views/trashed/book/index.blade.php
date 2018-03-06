@@ -18,7 +18,7 @@
                 Table::withContents($books->items())
                     ->striped()
                     ->callback('Ações', function($field, $book) {
-                        $linkEdit = route('books.edit', ['book' => $book->id]);
+                        $linkView = route('trashed.books.show', ['book' => $book->id]);
                         $linkDestroy = route('books.destroy', ['book' => $book->id]);
                         $deleteForm = "delete-form-{$book->id}";
                         $form = Form::open([
@@ -31,7 +31,7 @@
                                             ]);
 
                         return "<ul class=\"list-inline\">" .
-                                  "<li>" . Button::link('Editar')->asLinkTo($linkEdit) . "<li>" .
+                                  "<li>" . Button::link('Ver')->asLinkTo($linkView) . "<li>" .
                                   "<li>|</li>" .
                                   "<li>" . $anchorDestroy . "<li>" .
                                "</ul>" .

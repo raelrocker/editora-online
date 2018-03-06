@@ -36,4 +36,11 @@ class BooksTrashedController extends Controller
         $books = $this->repository->onlyTrashed()->paginate(10);
         return view('trashed.book.index', compact('books', 'search'));
     }
+
+    public function show($id)
+    {
+        $this->repository->onlyTrashed();
+        $book = $this->repository->find($id);
+        return view('trashed.book.show', compact('book'));
+    }
 }
