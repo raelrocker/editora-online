@@ -6,6 +6,7 @@ use CodePub\Criteria\CriteriaOnlyTrashedTrait;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodePub\Models\Book;
+use CodePub\Repositories\RepositoryRestoreTrait;
 
 /**
  * Class BookRepositoryEloquent
@@ -14,7 +15,8 @@ use CodePub\Models\Book;
 class BookRepositoryEloquent extends BaseRepository implements BookRepository
 {
     use CriteriaOnlyTrashedTrait;
-
+    use RepositoryRestoreTrait;
+    
     protected $fieldSearchable = [
         'title' => 'like',
         'user.name' => 'like'
