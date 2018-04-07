@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('books', 'BooksController', ['except' => 'show']);
     Route::group(['prefix' => 'trashed', 'as' => 'trashed.'], function() {
         Route::resource('books', 'BooksTrashedController', [
-            'except' => ['store', 'create', 'edit', 'update', 'destroy']
+            'except' => ['store', 'create', 'edit', 'destroy']
         ]);
     });
 });
