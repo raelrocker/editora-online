@@ -14,6 +14,10 @@ class Category extends Model implements TableInterface
 
     protected $fillable = ['name'];
 
+    public function getNameTrashedAttribute()
+    {
+        return $this->trashed() ? "{$this->name} (Inativa)" : $this->name;
+    }
 
     public function books()
     {

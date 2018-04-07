@@ -7,6 +7,7 @@ use CodePub\Criteria\FindByTitleCriteria;
 use CodePub\Http\Requests\BookCreateRequest;
 use CodePub\Http\Requests\BookRequest;
 use CodePub\Http\Requests\BookUpdateRequest;
+use CodePub\Models\Category;
 use CodePub\Repositories\BookRepository;
 use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
@@ -86,8 +87,10 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        $categories = $this->categoryRepository->lists('name', 'id');
         $book = $this->repository->find($id);
+        //$categories = $this->categoryRepository->lists('name', 'id');
+        $this->categoryRepository->withTrashed();
+        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
         return view('book.edit', compact('book', 'categories'));
     }
 
