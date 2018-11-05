@@ -14,7 +14,7 @@
         "patricktalmadge/bootstrapper": "~5.9.1",
         "prettus/l5-repository": "^2.6"
     },
-    "require-dev": {
+    "require-dev": {    
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
