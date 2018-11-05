@@ -8,7 +8,7 @@
         <br>
         <div class="row">
             {!! Form::model(compact('search'), ['class' => 'form-inline', 'method' => 'GET' ]) !!}
-                {!! Form::label('search', 'Pesquisar por título:', ['class' => 'control-label']) !!}
+                {!! Form::label('search', 'Pesquisar por título ou categoria:', ['class' => 'control-label']) !!}
                 {!! Form::text('search', null, ['class' => 'form-control']) !!}
 
                 {!! Button::primary('Buscar')->submit() !!}

@@ -41,9 +41,7 @@ class BooksController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->get('search');
-        $this->repository
-            ->pushCriteria(new FindByTitleCriteria($search));
+
         $books = $this->repository->paginate(10);
         return view('book.index', compact('books', 'search'));
     }

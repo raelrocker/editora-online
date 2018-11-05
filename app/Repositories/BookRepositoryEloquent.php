@@ -18,7 +18,8 @@ class BookRepositoryEloquent extends BaseRepository implements BookRepository
 
     protected $fieldSearchable = [
         'title' => 'like',
-        'user.name' => 'like'
+        'user.name' => 'like',
+        'categories.name' => 'like'
     ];
 
     public function create(array $attributes)
