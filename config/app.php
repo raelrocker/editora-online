@@ -173,6 +173,8 @@ return [
         \Nwidart\Modules\LaravelModulesServiceProvider::class,
         //
 
+        \CodeEduBook\Providers\CodeEduBookServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
