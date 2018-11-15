@@ -9,7 +9,7 @@
                 'method' => 'PUT'
             ]) !!}
 
-            @include('category._form')
+            @include('codeedubook::category._form')
 
             {!! Html::openFormGroup() !!}
                 {!! Button::primary('Salvar categoria')->submit() !!}

@@ -5,7 +5,7 @@
             <h3>Novo Livro</h3>
             {!! Form::open(['route' => 'books.store', 'class' => 'form']) !!}
 
-            @include('book._form')
+            @include('codeedubook::book._form')
 
             {!! Html::openFormGroup() !!}
                 {!! Button::primary('Criar livro')->submit() !!}

@@ -14,7 +14,7 @@
                 {!! Form::text('author', $book->user->name, ['class' => 'form-control', 'readonly' => 'true']) !!}
             {!! Html::closeFormGroup() !!}
 
-            @include('book._form')
+            @include('codeedubook::book._form')
 
             {!! Html::openFormGroup() !!}
                 {!! Button::primary('Salvar livro')->submit() !!}
