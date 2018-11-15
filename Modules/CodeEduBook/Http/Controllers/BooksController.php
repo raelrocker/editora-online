@@ -1,15 +1,16 @@
 <?php
 
-namespace CodePub\Http\Controllers;
+namespace CodeEduBook\Http\Controllers;
 
 use CodePub\Criteria\FindByAuthorCriteria;
 use CodePub\Criteria\FindByTitleCriteria;
-use CodePub\Http\Requests\BookCreateRequest;
+use CodePub\Http\Controllers\Controller;
+use CodeEduBook\Http\Requests\BookCreateRequest;
 use CodePub\Http\Requests\BookRequest;
-use CodePub\Http\Requests\BookUpdateRequest;
-use CodePub\Models\Category;
-use CodePub\Repositories\BookRepository;
-use CodePub\Repositories\CategoryRepository;
+use CodeEduBook\Http\Requests\BookUpdateRequest;
+use CodeEduBook\Models\Category;
+use CodeEduBook\Repositories\BookRepository;
+use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -43,7 +44,7 @@ class BooksController extends Controller
     {
 
         $books = $this->repository->paginate(10);
-        return view('book.index', compact('books', 'search'));
+        return view('codeedubook::book.index', compact('books', 'search'));
     }
 
     /**
@@ -54,7 +55,7 @@ class BooksController extends Controller
     public function create()
     {
         $categories = $this->categoryRepository->lists('name', 'id');
-        return view('book.create', compact('categories'));
+        return view('codeedubook::book.create', compact('categories'));
     }
 
     /**
@@ -89,7 +90,7 @@ class BooksController extends Controller
         //$categories = $this->categoryRepository->lists('name', 'id');
         $this->categoryRepository->withTrashed();
         $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
-        return view('book.edit', compact('book', 'categories'));
+        return view('codeedubook::book.edit', compact('book', 'categories'));
     }
 
     /**

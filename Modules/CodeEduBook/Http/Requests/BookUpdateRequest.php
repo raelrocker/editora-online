@@ -1,8 +1,9 @@
 <?php
 
-namespace CodePub\Http\Requests;
+namespace CodeEduBook\Http\Requests;
 
-use CodePub\Repositories\BookRepository;
+use CodeEduBook\Http\Requests\BookCreateRequest;
+use CodeEduBook\Repositories\BookRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 

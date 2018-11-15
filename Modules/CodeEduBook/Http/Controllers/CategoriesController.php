@@ -1,11 +1,12 @@
 <?php
 
-namespace CodePub\Http\Controllers;
+namespace CodeEduBook\Http\Controllers;
 
 use CodePub\Criteria\FindByNameCriteria;
-use CodePub\Models\Category;
-use CodePub\Http\Requests\CategoryRequest;
-use CodePub\Repositories\CategoryRepository;
+use CodeEduBook\Models\Category;
+use CodePub\Http\Controllers\Controller;
+use CodeEduBook\Http\Requests\CategoryRequest;
+use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -18,7 +19,6 @@ class CategoriesController extends Controller
 
     public function __construct(CategoryRepository $repository)
     {
-
         $this->repository = $repository;
     }
 
@@ -30,11 +30,12 @@ class CategoriesController extends Controller
      */
     public function index(Request $request)
     {
+
         $search = $request->get('search');
         $this->repository
             ->pushCriteria(new FindByNameCriteria($search));
         $categories = $this->repository->paginate(10);
-        return view('category.index', compact('categories', 'search'));
+        return view('codeedubook::category.index', compact('categories', 'search'));
     }
 
     /**
@@ -44,7 +45,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('codeedubook::category.create');
     }
 
     /**
@@ -71,7 +72,7 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         $category = $this->repository->find($id);
-        return view('category.edit', compact('category'));
+        return view('codeedubook::category.edit', compact('category'));
     }
 
     /**

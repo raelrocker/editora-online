@@ -11,5 +11,10 @@
     "aliases":{},
     "files": [
         "start.php"
-    ]
+    ],
+    "migration": {
+        "seed": [
+            "CodeEduBookDatabaseSeeder"
+        ]
+    }
 }

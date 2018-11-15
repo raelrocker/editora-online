@@ -1,36 +1,28 @@
 <?php
 
-namespace CodePub\Models;
+namespace CodeEduBook\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
-use Collective\Html\Eloquent\FormAccessible;
+use CodeEduBook\Models\Book;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Book extends Model implements TableInterface
+class Category extends Model implements TableInterface
 {
-    use FormAccessible;
-
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
+    protected $fillable = ['name'];
 
-    protected $fillable = ['title', 'subtitle', 'price', 'user_id'];
-
-    public function user()
+    public function getNameTrashedAttribute()
     {
-        return $this->belongsTo('CodePub\Models\User');
+        return $this->trashed() ? "{$this->name} (Inativa)" : $this->name;
     }
 
-    public function categories()
+    public function books()
     {
-        return $this->belongsToMany(Category::class)->withTrashed();
-    }
-
-    public function formCategoriesAttribute()
-    {
-        return $this->categories->pluck('id')->all();
+        return $this->belongsToMany(Book::class);
     }
 
     /**
@@ -40,7 +32,7 @@ class Book extends Model implements TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'title', 'subtitle', 'price', 'author'];
+        return ['#', 'name'];
     }
 
     /**
@@ -55,11 +47,10 @@ class Book extends Model implements TableInterface
         switch ($header) {
             case '#':
                 return $this->id;
-            case 'author':
-                return $this->user->name;
             default:
                 return $this->$header;
         }
     }
+
 
 }

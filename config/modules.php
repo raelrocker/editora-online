@@ -54,7 +54,7 @@ return [
     'paths' => [
         /*
         |--------------------------------------------------------------------------
-        | Modules path
+        | modules path
         |--------------------------------------------------------------------------
         |
         | This path used for save the generated module. This path also will added
@@ -62,10 +62,10 @@ return [
         |
         */
 
-        'modules' => base_path('Modules'),
+        'modules' => base_path('modules'),
         /*
         |--------------------------------------------------------------------------
-        | Modules assets path
+        | modules assets path
         |--------------------------------------------------------------------------
         |
         | Here you may update the modules assets path.

@@ -1,6 +1,5 @@
 <?php
 
-namespace CodeEduBook\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +15,6 @@ class CodeEduBookDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call(TestesTableTestesTableSeeder::class);
     }
 }
