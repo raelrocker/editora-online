@@ -4,7 +4,6 @@ namespace CodeEduBook\Http\Controllers;
 
 
 use CodeEduBook\Models\Book;
-use CodePub\Http\Controllers\Controller;
 use CodeEduBook\Repositories\BookRepository;
 use Illuminate\Http\Request;
 use CodePub\Criteria\FindOnlyTrashedCriteria;

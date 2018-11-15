@@ -2,7 +2,7 @@
 
 namespace CodePub\Http\Controllers\Auth;
 
-use CodePub\Models\User;
+use CodeEduUser\Models\User;
 use CodePub\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;

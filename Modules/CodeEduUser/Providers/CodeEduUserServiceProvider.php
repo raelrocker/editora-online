@@ -1,11 +1,10 @@
 <?php
 
-namespace CodeEduBook\Providers;
+namespace CodeEduUser\Providers;
 
-use CodePub\Providers\RepositoryServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
-class CodeEduBookServiceProvider extends ServiceProvider
+class CodeEduUserServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -34,8 +33,8 @@ class CodeEduBookServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(\CodeEduBook\Providers\RepositoryServiceProvider::class);
     }
 
     /**
@@ -46,10 +45,10 @@ class CodeEduBookServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('codeedubook.php'),
+            __DIR__.'/../Config/config.php' => config_path('codeeduuser.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'codeedubook'
+            __DIR__.'/../Config/config.php', 'codeeduuser'
         );
     }
 
@@ -60,7 +59,7 @@ class CodeEduBookServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = base_path('resources/views/modules/codeedubook');
+        $viewPath = base_path('resources/views/modules/codeeduuser');
 
         $sourcePath = __DIR__.'/../resources/views';
 
@@ -69,8 +68,8 @@ class CodeEduBookServiceProvider extends ServiceProvider
         ]);
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/codeedubook';
-        }, \Config::get('view.paths')), [$sourcePath]), 'codeedubook');
+            return $path . '/modules/codeeduuser';
+        }, \Config::get('view.paths')), [$sourcePath]), 'codeeduuser');
     }
 
     /**
@@ -80,12 +79,12 @@ class CodeEduBookServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = base_path('resources/lang/modules/codeedubook');
+        $langPath = base_path('resources/lang/modules/codeeduuser');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'codeedubook');
+            $this->loadTranslationsFrom($langPath, 'codeeduuser');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../resources/lang', 'codeedubook');
+            $this->loadTranslationsFrom(__DIR__ .'/../resources/lang', 'codeeduuser');
         }
     }
 

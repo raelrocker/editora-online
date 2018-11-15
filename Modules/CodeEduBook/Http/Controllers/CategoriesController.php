@@ -4,7 +4,6 @@ namespace CodeEduBook\Http\Controllers;
 
 use CodePub\Criteria\FindByNameCriteria;
 use CodeEduBook\Models\Category;
-use CodePub\Http\Controllers\Controller;
 use CodeEduBook\Http\Requests\CategoryRequest;
 use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;

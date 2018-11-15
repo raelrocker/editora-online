@@ -21,7 +21,7 @@ class Book extends Model implements TableInterface
 
     public function user()
     {
-        return $this->belongsTo('CodePub\Models\User');
+        return $this->belongsTo('CodeEduUser\Models\User');
     }
 
     public function categories()
