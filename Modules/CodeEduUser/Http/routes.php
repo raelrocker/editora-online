@@ -1,3 +1,5 @@
 <?php
 
-Route::get('/', 'CodeEduUserController@index');
+Route::group(['prefix' => 'admin', 'as' => 'codeeduuser.'], function() {
+   Route::resource('users', 'UsersController');
+});
