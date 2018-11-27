@@ -15,7 +15,12 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function create(array $attributes)
     {
         $attributes['password'] = User::generatePassword();
-        return parent::create($attributes);
+        $model = parent::create($attributes);
+        \UserVerification::generate($model);
+        $subject = config('codeeduuser.email.user_created.subject');
+        \UserVerification::emailView('codeeduuser::emails.user-created');
+        \UserVerification::send($model, $subject);
+        return $model;
     }
     
     public function update(array $attributes, $id) 
