@@ -84,7 +84,8 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $data = $request->except(['password']);
+        $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('codeeduuser.users.index'));
         $request->session()->flash('message', 'Usuário alterado com sucesso.');
         return redirect()->to($url);

@@ -6,7 +6,6 @@
 
             {!! Form::open(['route' => ['codeeduuser.user_settings.update' ], 'class' => 'form', 'method' => 'PUT']) !!}
 
-                {!! Form::hidden('redirect_to', URL::previous()) !!}
                 {!! Html::openFormGroup('password', $errors) !!}
                     {!! Form::label('password', 'Senha', ['class' => 'control-label']) !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}

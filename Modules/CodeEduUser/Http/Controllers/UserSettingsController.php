@@ -47,9 +47,8 @@ class UserSettingsController extends Controller
     {
         $user = \Auth::user();
         $this->repository->update($request->all(), $user->id);
-        $url = $request->get('redirect_to', route('codeeduuser.user_settings.edit'));
         $request->session()->flash('message', 'Usuário alterado com sucesso.');
-        return redirect()->to($url);
+        return redirect()->route('codeeduuser.user_settings.edit');
     }
 
 }
