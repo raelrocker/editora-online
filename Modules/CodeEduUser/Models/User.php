@@ -27,6 +27,11 @@ class User extends Authenticatable implements TableInterface
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public static function generatePassword() 
+    {
+        return bcrypt(str_random(8));
+    }
 
     public function books()
     {
