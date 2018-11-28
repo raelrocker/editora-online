@@ -2,6 +2,7 @@
 
 namespace CodeEduUser\Http\Controllers;
 
+use CodeEduUser\Http\Requests\UserDeleteRequest;
 use CodePub\Criteria\FindByNameCriteria;
 use CodeEduUser\Models\User;
 use CodeEduUser\Http\Requests\UserRequest;
@@ -99,7 +100,7 @@ class UsersController extends Controller
      * @internal param User $user
      * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(UserDeleteRequest $request, $id)
     {
         $this->repository->delete($id);
         \Session::flash('message', 'Usuário excluído com sucesso.');

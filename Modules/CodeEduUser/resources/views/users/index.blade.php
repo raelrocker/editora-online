@@ -29,7 +29,8 @@
                                             ->addAttributes([
                                                 'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteForm}\").submit();"
                                             ]);
-
+                        $anchorFlag = '<a href="#" title="Não é possível excluir o próprio usuário">Excluir</a>';
+                        $anchorDestroy = $user->id == \Auth::user()->id ? $anchorFlag : $anchorDestroy;
                         return "<ul class=\"list-inline\">" .
                                   "<li>" . Button::link('Editar')->asLinkTo($linkEdit) . "<li>" .
                                   "<li>|</li>" .
