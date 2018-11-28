@@ -18,11 +18,11 @@
                 Table::withContents($users->items())
                     ->striped()
                     ->callback('Ações', function($field, $user) {
-                        $linkEdit = route('categories.edit', ['user' => $user->id]);
-                        $linkDestroy = route('categories.destroy', ['user' => $user->id]);
+                        $linkEdit = route('codeeduuser.users.edit', ['user' => $user->id]);
+                        $linkDestroy = route('codeeduuser.users.destroy', ['user' => $user->id]);
                         $deleteForm = "delete-form-{$user->id}";
                         $form = Form::open([
-                                    'route' => ['categories.destroy', 'user' => $user->id],
+                                    'route' => ['codeeduuser.users.destroy', 'user' => $user->id],
                                     'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display: none']) .
                                 Form::close();
                          $anchorDestroy = Button::link('Excluir')->asLinkTo($linkDestroy)
