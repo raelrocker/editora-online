@@ -3,6 +3,7 @@
 namespace CodeEduUser\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -72,5 +73,21 @@ class User extends Authenticatable implements TableInterface
             default:
                 return $this->$header;
         }
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @param Collection|string $role
+     * @return int
+     */
+    public function hasRole($role)
+    {
+        return is_string($role) ?
+            $this->roles->contains('name', $role) :
+            $role->intersect($this->roles)->count();
     }
 }
