@@ -35,6 +35,6 @@ class BookUpdateRequest extends BookCreateRequest
 
         $book = $this->repository->find($id);
 
-        return $book->user_id == Auth::user()->id;
+        return \Gate::allows('update-book', $book);
     }
 }

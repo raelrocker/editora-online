@@ -18,6 +18,7 @@ class CreateUsersData extends Migration
             'password' => bcrypt(config('codeeduuser.user_default.password')),
             'verified' => true
         ]);
+        \Illuminate\Database\Eloquent\Model::reguard();
     }
 
     /**
