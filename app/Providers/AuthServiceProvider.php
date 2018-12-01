@@ -29,8 +29,11 @@ class AuthServiceProvider extends ServiceProvider
            return $user->id == $book->user_id;
         });
 
-        \Gate::define('user-admin', function($user) {
-            return $user->isAdmin();
-         });
+        \Gate::before(function($user, $ability) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+        });
+
     }
 }
