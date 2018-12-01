@@ -8,7 +8,12 @@ use CodeEduUser\Http\Requests\UserSettingRequest;
 use CodeEduUser\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Jrean\UserVerification\Traits\VerifiesUsers;
+use CodeEduUser\Annotations\Mapping\Controller as ControllerAnnotation;
+use CodeEduUser\Annotations\Mapping\Action as ActionAnnotation;
 
+/**
+ * @Controller(name="user-settings", description="Administração de usuário")
+ */
 class UserSettingsController extends Controller
 {
 
@@ -24,7 +29,7 @@ class UserSettingsController extends Controller
     
     /**
      * Show the form for editing the specified resource.
-     *
+     * 
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param User $user
