@@ -37,4 +37,6 @@ class BookUpdateRequest extends BookCreateRequest
 
         return \Gate::allows('update-book', $book);
     }
+
+
 }
