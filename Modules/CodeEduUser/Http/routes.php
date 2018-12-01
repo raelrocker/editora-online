@@ -5,6 +5,7 @@ Route::group([
     'middleware' => ['auth', config('codeeduuser.middleware.isVerified')]], function() {
     Route::group(['prefix' => 'admin', 'middleware' => 'can:user-admin'], function() {
         Route::resource('users', 'UsersController');
+        Route::resource('roles', 'RolesController');
      });
      
      Route::get('users/settings', 'UserSettingsController@edit')->name('user_settings.edit');
