@@ -8,7 +8,11 @@ use CodeEduUser\Models\User;
 use CodeEduUser\Http\Requests\UserRequest;
 use CodeEduUser\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use CodeEduUser\Annotations\Mapping\Controller as ControllerAnnotation;
 
+/**
+ * @Controller(name="user-admin", description="Administração de usuário")
+ */
 class UsersController extends Controller
 {
 
