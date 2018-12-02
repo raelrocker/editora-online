@@ -12,7 +12,7 @@ use CodeEduUser\Annotations\Mapping\Controller as ControllerAnnotation;
 use CodeEduUser\Annotations\Mapping\Action as ActionAnnotation;
 
 /**
- * @Controller(name="user-admin", description="Administração de usuário")
+ * @ControllerAnnotation(name="user-admin", description="Administração de usuário")
  */
 class UsersController extends Controller
 {

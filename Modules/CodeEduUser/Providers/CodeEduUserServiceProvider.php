@@ -2,6 +2,8 @@
 
 namespace CodeEduUser\Providers;
 
+use CodeEduUser\Annotations\PermissionReader;
+use CodeEduUser\Models\Permission;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\CachedReader;
@@ -29,6 +31,8 @@ class CodeEduUserServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->publishMigrationsAndSeeder();
+
+        
     }
 
     /**

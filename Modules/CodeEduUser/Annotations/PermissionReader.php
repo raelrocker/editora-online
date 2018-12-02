@@ -23,15 +23,17 @@ class PermissionReader
 
     public function getPermissions()
     {
+
         $controllersClasses = $this->getControllers();
         $declared = get_declared_classes();
+
         $permissions = [];
         foreach($declared as $className) {
             $rc = new \ReflectionClass($className);
             if (in_array($rc->getFileName(), $controllersClasses)) {
                 $permission = $this->getPermission($className);
                 if (count($permission)) {
-                    $permissions[] = array_merge($permissions, $permission);
+                    $permissions = array_merge($permissions, $permission);
                 }
             }
         }
@@ -45,7 +47,7 @@ class PermissionReader
         $controllerAnnotation = $this->reader->getClassAnnotation($rc, Controller::class);
         $permissions = [];
         if ($controllerAnnotation){
-            $permission[] = [
+            $permission = [
                 'name' => $controllerAnnotation->name,
                 'description' => $controllerAnnotation->description
             ];
@@ -66,7 +68,7 @@ class PermissionReader
 
     private function getControllers()
     {
-        $dirs = config('codeeduuser.acl.controller_annotations');
+        $dirs = config('codeeduuser.acl.controllers_annotations');
         $files = [];
         foreach($dirs as $dir) {
             foreach(\File::allFiles($dir) as $file) {

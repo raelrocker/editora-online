@@ -2,15 +2,16 @@
 
 namespace CodeEduUser\Repositories;
 
+use CodeEduUser\Models\Permission;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
-use CodeEduUser\Models\Role;
+
 
 /**
  * Class UserRepositoryEloquent
  * @package namespace CodePub\Repositories;
  */
-class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
+class PermissionRepositoryEloquent extends BaseRepository implements PermissionRepository
 {
 
     /**
@@ -20,7 +21,7 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
      */
     public function model()
     {
-        return Role::class;
+        return Permission::class;
     }
 
     /**

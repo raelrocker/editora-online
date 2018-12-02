@@ -8,6 +8,7 @@ use CodeEduUser\Repositories\RoleRepository;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
 
+
 class RolesController extends Controller
 {
 

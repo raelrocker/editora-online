@@ -2,11 +2,16 @@
 
 namespace CodeEduUser\Http\Controllers;
 
+use CodeEduUser\Http\Controllers\Controller as UserController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+use CodeEduUser\Annotations\Mapping\Controller as ControllerAnnotation;
+use CodeEduUser\Annotations\Mapping\Action as ActionAnnotation;
 
-class CodeEduUserController extends Controller
+/**
+ * @ControllerAnnotation(name="user-admin", description="Administração de usuário")
+ */
+class CodeEduUserController extends UserController
 {
     /**
      * Display a listing of the resource.
