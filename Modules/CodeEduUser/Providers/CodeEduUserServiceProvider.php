@@ -32,7 +32,7 @@ class CodeEduUserServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->publishMigrationsAndSeeder();
 
-        
+
     }
 
     /**
