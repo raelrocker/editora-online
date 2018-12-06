@@ -40,7 +40,7 @@ class PermissionReader
         return $permissions;
     }
 
-    public function getPermission($controllerClass)
+    public function getPermission($controllerClass, $action = null)
     {
         $rc = new \ReflectionClass($controllerClass);
         /** @var Controller $controllerAnnotation */
@@ -51,7 +51,7 @@ class PermissionReader
                 'name' => $controllerAnnotation->name,
                 'description' => $controllerAnnotation->description
             ];
-            $rcMethods = $rc->getMethods();
+            $rcMethods = !$action ? $rc->getMethods() : [$rc->getMethod($action)];
             foreach($rcMethods as $rcMethod) {
 
                 /** @var Action $actionAnnotation */
