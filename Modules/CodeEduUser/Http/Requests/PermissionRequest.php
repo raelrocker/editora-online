@@ -26,8 +26,9 @@ class PermissionRequest extends FormRequest
     public function rules()
     {
         $id = $this->route('role');
+        
         return [
-            'permissions' => 'required|array',
+            'permissions' => 'array',
             'permissions.*' => 'exists:permissions,id'
         ];
     }
