@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Collective\Html\Eloquent\FormAccessible;
 
 class User extends Authenticatable implements TableInterface
 {
     use Notifiable;
     use SoftDeletes;
+    use FormAccessible;
 
     protected $dates = ['deleted_at'];
 
@@ -33,6 +35,11 @@ class User extends Authenticatable implements TableInterface
         'password', 'remember_token',
     ];
     
+    public function formRolesAttribute()
+    {
+        return $this->roles->pluck('id')->all();
+    }
+    
     public static function generatePassword($password = null) 
     {
         
@@ -51,7 +58,7 @@ class User extends Authenticatable implements TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'Nome', 'E-mail'];
+        return ['#', 'Nome', 'E-mail', 'Roles'];
     }
 
     /**
@@ -70,8 +77,8 @@ class User extends Authenticatable implements TableInterface
                 return $this->name;
             case 'E-mail':
                 return $this->email;
-            default:
-                return $this->$header;
+            case 'Roles':
+                return $this->roles->implode('name', ' | ');
         }
     }
 

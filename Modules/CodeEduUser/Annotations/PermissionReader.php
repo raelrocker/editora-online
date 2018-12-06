@@ -71,6 +71,7 @@ class PermissionReader
         $dirs = config('codeeduuser.acl.controllers_annotations');
         $files = [];
         foreach($dirs as $dir) {
+            
             foreach(\File::allFiles($dir) as $file) {
                 $files[] = $file->getRealPath();
                 require_once $file->getRealPath();

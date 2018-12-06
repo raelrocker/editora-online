@@ -10,7 +10,7 @@ use CodeEduUser\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use CodeEduUser\Annotations\Mapping\Controller as ControllerAnnotation;
 use CodeEduUser\Annotations\Mapping\Action as ActionAnnotation;
-
+use CodeEduUser\Repositories\RoleRepository;
 /**
  * @ControllerAnnotation(name="user-admin", description="Administração de usuário")
  */
@@ -21,10 +21,16 @@ class UsersController extends Controller
      * @var UserRepository
      */
     private $repository;
+    
+     /**
+     * @var RoleRepository
+     */
+    private $roleRepository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $repository, RoleRepository $roleReporitory)
     {
         $this->repository = $repository;
+        $this->roleRepository = $roleReporitory;
     }
 
     /**
@@ -50,7 +56,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('codeeduuser::users.create');
+        $roles = $this->roleRepository->all()->pluck('name', 'id');
+        return view('codeeduuser::users.create', compact('roles'));
     }
 
     /**
@@ -77,7 +84,8 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = $this->repository->find($id);
-        return view('codeeduuser::users.edit', compact('user'));
+        $roles = $this->roleRepository->all()->pluck('name', 'id');
+        return view('codeeduuser::users.edit', compact('user', 'roles'));
     }
 
     /**

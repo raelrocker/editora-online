@@ -16,6 +16,9 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         $attributes['password'] = User::generatePassword();
         $model = parent::create($attributes);
+        if (isset($attributes['roles'])) {
+            $model->roles()->sync($attributes['roles']);
+        }
         \UserVerification::generate($model);
         $subject = config('codeeduuser.email.user_created.subject');
         \UserVerification::emailView('codeeduuser::emails.user-created');
@@ -28,8 +31,11 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         if (isset($attributes['password'])) {
             $attributes['password'] = User::generatePassword($attributes['password']);
         }
-
+        
         parent::update($attributes, $id);
+        if (isset($attributes['roles'])) {
+            $model->roles()->sync($attributes['roles']);
+        }
     }
     
     /**
