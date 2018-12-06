@@ -2,11 +2,11 @@
 
 namespace CodeEduUser\Console;
 
-use CodeEduUser\Annotations\PermissionReader;
 use CodeEduUser\Repositories\PermissionRepository;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+
 
 class CreatePermissionsCommand extends Command
 {
@@ -27,21 +27,16 @@ class CreatePermissionsCommand extends Command
      * @var PermissionRepository
      */
     private $repository;
-    /**
-     * @var PermissionReader
-     */
-    private $reader;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(PermissionRepository $repository, PermissionReader $reader)
+    public function __construct(PermissionRepository $repository)
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->reader = $reader;
     }
 
     /**
@@ -51,7 +46,7 @@ class CreatePermissionsCommand extends Command
      */
     public function fire()
     {
-        $permissions = $this->reader->getPermissions();
+        $permissions = \PermissionReader::getPermissions();
         foreach($permissions as $permission) {
             $this->repository->create($permission);
         }

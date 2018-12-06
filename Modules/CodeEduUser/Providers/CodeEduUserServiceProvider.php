@@ -54,6 +54,10 @@ class CodeEduUserServiceProvider extends ServiceProvider
                 $debug = env('APP_DEBUG')
             );
         });
+        
+        $this->app->bind('permission-reader', function() {
+            return new PermissionReader(app(Reader::class));
+        });
     }
 
     protected function registerAnnotations(){
