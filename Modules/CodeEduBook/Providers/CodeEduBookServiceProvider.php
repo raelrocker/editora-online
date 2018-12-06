@@ -36,6 +36,7 @@ class CodeEduBookServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(\CodeEduBook\Providers\RepositoryServiceProvider::class);
+        $this->app->register(\CodeEduBook\Providers\AuthServiceProvider::class);
     }
 
     /**

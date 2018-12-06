@@ -8,6 +8,6 @@ use CodeEduUser\Annotations\PermissionReader as PermissionReaderService;
 class PermissionReader extends Facade
 {
     protected static function getFacadeAccessor() {
-        return 'permission-reader';
+        return PermissionReaderService::class;
     }
 }

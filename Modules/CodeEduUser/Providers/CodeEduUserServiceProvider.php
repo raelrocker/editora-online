@@ -55,9 +55,7 @@ class CodeEduUserServiceProvider extends ServiceProvider
             );
         });
         
-        $this->app->bind('permission-reader', function() {
-            return new PermissionReader(app(Reader::class));
-        });
+        
     }
 
     protected function registerAnnotations(){
