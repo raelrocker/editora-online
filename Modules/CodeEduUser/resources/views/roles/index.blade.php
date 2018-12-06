@@ -13,6 +13,7 @@
                     ->callback('Ações', function($field, $role) {
                         $linkEdit = route('codeeduuser.roles.edit', ['role' => $role->id]);
                         $linkDestroy = route('codeeduuser.roles.destroy', ['role' => $role->id]);
+                        $linkPermission = route('codeeduuser.roles.permissions.edit', ['role' => $role->id]);
                         $deleteForm = "delete-form-{$role->id}";
                         $form = Form::open([
                                     'route' => ['codeeduuser.roles.destroy', 'role' => $role->id],
@@ -24,9 +25,11 @@
                                             ]);
 
                         return "<ul class=\"list-inline\">" .
-                                  "<li>" . Button::link('Editar')->asLinkTo($linkEdit) . "<li>" .
+                                  "<li>" . Button::link('Editar')->asLinkTo($linkEdit) . "</li>" .
                                   "<li>|</li>" .
-                                  "<li>" . $anchorDestroy . "<li>" .
+                                  "<li>" . $anchorDestroy . "</li>" .
+                                  "<li>|<li>" .
+                                  "<li>" . Button::link('Permissões')->asLinkTo($linkPermission) . "</li>" .
                                "</ul>" .
                                $form;
                     })
