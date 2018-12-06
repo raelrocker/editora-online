@@ -45,6 +45,7 @@ class CodeEduUserServiceProvider extends ServiceProvider
         $this->app->register(\Jrean\UserVerification\UserVerificationServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(AuthServiceProvider::class);
         $this->registerAnnotations();
         $this->app->bind(Reader::class, function() {
             return new CachedReader(
