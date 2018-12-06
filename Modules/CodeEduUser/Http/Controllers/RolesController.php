@@ -11,7 +11,11 @@ use CodeEduUser\Repositories\PermissionRepository;
 use CodeEduUser\Criteria\FindPermissionsResourceCriteria;
 use CodeEduUser\Criteria\FindPermissionsGroupResourceCriteria;
 use CodeEduUser\Http\Requests\PermissionRequest;
+use CodeEduUser\Annotations\Mapping as Permission;
 
+/**
+ * @Permission\Controller(name="roles-admin", description="Administração de papéis de usuário")
+ */
 class RolesController extends Controller
 {
 
@@ -33,7 +37,7 @@ class RolesController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @Permission\Action(name="list", description="Ver listagem de papéis usuários")
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -46,7 +50,7 @@ class RolesController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @Permission\Action(name="store", description="Criar papéis de usuário")
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -56,7 +60,7 @@ class RolesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @Permission\Action(name="store", description="Criar papéis de usuário")
      * @param RoleRequest|Request $request
      * @return \Illuminate\Http\Response
      */
@@ -70,7 +74,7 @@ class RolesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * @Permission\Action(name="update", description="Atualizar papéis de usuário")
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param User $user
@@ -83,7 +87,7 @@ class RolesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * @Permission\Action(name="update", description="Atualizar papéis de usuário")
      * @param RoleRequest|UserRequest|Request $request
      * @param $id
      * @return \Illuminate\Http\Response
@@ -100,7 +104,7 @@ class RolesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     * @Permission\Action(name="destroy", description="Excluir papéis de usuário")
      * @param RoleDeleteRequest $request
      * @param $id
      * @return \Illuminate\Http\Response

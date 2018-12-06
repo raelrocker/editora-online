@@ -8,12 +8,7 @@ use CodeEduUser\Http\Requests\UserSettingRequest;
 use CodeEduUser\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Jrean\UserVerification\Traits\VerifiesUsers;
-use CodeEduUser\Annotations\Mapping\Controller as ControllerAnnotation;
-use CodeEduUser\Annotations\Mapping\Action as ActionAnnotation;
 
-/**
- * @ControllerAnnotation(name="user-admin", description="Administração de usuário")
- */
 class UserSettingsController extends Controller
 {
 
