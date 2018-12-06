@@ -5,6 +5,7 @@ namespace CodeEduUser\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use CodeEduUser\Annotations\PermissionReader;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AuthorizationResource
 {
@@ -32,7 +33,10 @@ class AuthorizationResource
         list($controller, $action) = explode('@', $currentAction);
         $permission = $this->reader->getPermission($controller, $action);
         if (count($permission)) {
-            
+            $permission = $permission[0];
+            if (\Gate::denies("{$permission['name']}/{$permission['resource_name']}")) {
+                throw new AuthorizationException('Usuário não autorizado');
+            }
         }
         return $next($request);
     }
