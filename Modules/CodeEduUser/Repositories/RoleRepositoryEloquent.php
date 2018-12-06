@@ -13,6 +13,14 @@ use CodeEduUser\Models\Role;
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {
 
+    public function update(array $attributes, $id) {
+        $model = parent::update($attributes, $id);
+        if (isset($attributes['permissions'])) {
+            $model->permissions()->sync($attributes['permissions']);
+        }
+        return $model;
+    }
+    
     /**
      * Specify Model class name
      *

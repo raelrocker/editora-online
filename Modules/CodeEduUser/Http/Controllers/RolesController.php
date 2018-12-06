@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use CodeEduUser\Repositories\PermissionRepository;
 use CodeEduUser\Criteria\FindPermissionsResourceCriteria;
 use CodeEduUser\Criteria\FindPermissionsGroupResourceCriteria;
+use CodeEduUser\Http\Requests\PermissionRequest;
 
 class RolesController extends Controller
 {
@@ -90,7 +91,8 @@ class RolesController extends Controller
      */
     public function update(RoleRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $data = $request->except('permissions');
+        $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('codeeduuser.roles.index'));
         $request->session()->flash('message', 'Papel de usuário alterado com sucesso.');
         return redirect()->to($url);
@@ -129,8 +131,12 @@ class RolesController extends Controller
         return view('codeeduuser::roles.permissions', compact('role', 'permissions', 'permissionsGroup'));
     }
     
-    public function updatePermission($id)
+    public function updatePermission(PermissionRequest $request, $id)
     {
-        
+        $data = $request->only('permissions');
+        $this->repository->update($data, $id);
+        $url = $request->get('redirect_to', route('codeeduuser.roles.index'));
+        $request->session()->flash('message', 'Permissões atribuídas com sucesso.');
+        return redirect()->to($url);
     }
 }
