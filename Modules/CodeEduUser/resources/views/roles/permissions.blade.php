@@ -7,18 +7,36 @@
         </div>
         <div class="row">
             {!! Form::open(['route' => ['codeeduuser.roles.permissions.edit', $role->id], 'class' => 'form', 'method' => 'PUT']) !!}
-                <ul class="list-inline">
-                    @foreach($permissions as $permission)
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> {{$permission->resource_description}}
-                                </label>
-                            </div>
-                        </li>
-                    }
-                    @endforeach
-                </ul>
+            
+            <ul class="list-group">
+                @foreach($permissionsGroup as $pg)
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                            <strong>{{$pg->description}}</strong>
+                        </h4>
+                        <p class="list-group-item-text">
+                            <ul class="list-inline">
+                                <?php 
+                                    $permissionsSubGroup = $permissions->filter(function($value) use ($pg) {
+                                        return $value->name == $pg->name;
+                                    });
+                                ?>
+                                @foreach($permissionsSubGroup as $permission)
+                                    <li>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> {{$permission->resource_description}}
+                                            </label>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </p>
+                    </li>
+                @endforeach
+            </ul>
+            
+                
                 {!! Html::openFormGroup() !!}
                     {!! Button::primary('Salvar')->submit() !!}
                 {!! Html::closeFormGroup() !!}

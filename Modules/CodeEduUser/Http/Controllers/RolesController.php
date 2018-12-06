@@ -9,6 +9,7 @@ use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
 use CodeEduUser\Repositories\PermissionRepository;
 use CodeEduUser\Criteria\FindPermissionsResourceCriteria;
+use CodeEduUser\Criteria\FindPermissionsGroupResourceCriteria;
 
 class RolesController extends Controller
 {
@@ -122,7 +123,10 @@ class RolesController extends Controller
         $role = $this->repository->find($id);
         $this->permissionRepository->pushCriteria(new FindPermissionsResourceCriteria());
         $permissions = $this->permissionRepository->all();
-        return view('codeeduuser::roles.permissions', compact('role', 'permissions'));
+        $this->permissionRepository->resetCriteria();
+        $this->permissionRepository->pushCriteria(new FindPermissionsGroupResourceCriteria());
+        $permissionsGroup = $this->permissionRepository->all(['name', 'description']);
+        return view('codeeduuser::roles.permissions', compact('role', 'permissions', 'permissionsGroup'));
     }
     
     public function updatePermission($id)
