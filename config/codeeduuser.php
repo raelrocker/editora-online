@@ -18,7 +18,8 @@ return [
         'role_admin' => env('ROLE_ADMIN', 'Admin'),
         'controllers_annotations' => [
             //__DIR__ . '/../Http/Controllers'
-            'C:\Users\Israel\Documents\Editora\editora-online\Modules\CodeEduUser\Http\Controllers'
+            'C:\Users\Israel\Documents\Editora\editora-online\Modules\CodeEduUser\Http\Controllers',
+            'C:\Users\Israel\Documents\Editora\editora-online\Modules\CodeEduBook\Http\Controllers'
         ]
     ]
 ];

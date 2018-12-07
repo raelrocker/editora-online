@@ -7,7 +7,12 @@ use CodeEduBook\Models\Book;
 use CodeEduBook\Repositories\BookRepository;
 use Illuminate\Http\Request;
 use CodePub\Criteria\FindOnlyTrashedCriteria;
+use CodeEduUser\Http\Requests\PermissionRequest;
+use CodeEduUser\Annotations\Mapping as Permission;
 
+/**
+ * @Permission\Controller(name="books-trashed-admin", description="Administração da lixeira de  livros")
+ */
 class BooksTrashedController extends Controller
 {
     /**
@@ -26,7 +31,7 @@ class BooksTrashedController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @Permission\Action(name="list", description="Ver listagem de livros na lixeira")
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -36,7 +41,13 @@ class BooksTrashedController extends Controller
         $books = $this->repository->onlyTrashed()->paginate(10);
         return view('codeedubook::trashed.book.index', compact('books', 'search'));
     }
-
+    
+    /**
+     * Show the form for editing the specified resource.
+     * @Permission\Action(name="show", description="Ver livro na lixeira")
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         $this->repository->onlyTrashed();
@@ -44,6 +55,13 @@ class BooksTrashedController extends Controller
         return view('trashed.book.show', compact('book'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     * @Permission\Action(name="update", description="Atualizar livro na lixeira")
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $this->repository->onlyTrashed();

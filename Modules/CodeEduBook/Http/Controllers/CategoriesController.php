@@ -7,7 +7,12 @@ use CodeEduBook\Models\Category;
 use CodeEduBook\Http\Requests\CategoryRequest;
 use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
+use CodeEduUser\Http\Requests\PermissionRequest;
+use CodeEduUser\Annotations\Mapping as Permission;
 
+/**
+ * @Permission\Controller(name="categorias-admin", description="Administração de categorias")
+ */
 class CategoriesController extends Controller
 {
 
@@ -23,7 +28,7 @@ class CategoriesController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @Permission\Action(name="list", description="Ver listagem de categorias")
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -39,7 +44,7 @@ class CategoriesController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @Permission\Action(name="store", description="Criar categorias")
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -49,7 +54,7 @@ class CategoriesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @Permission\Action(name="store", description="Criar categorias")
      * @param CategoryRequest|Request $request
      * @return \Illuminate\Http\Response
      */
@@ -63,7 +68,7 @@ class CategoriesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * @Permission\Action(name="update", description="Atualizar categorias")
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param Category $category
@@ -76,7 +81,7 @@ class CategoriesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * @Permission\Action(name="update", description="Atualizar categorias")
      * @param CategoryRequest|Request $request
      * @param $id
      * @return \Illuminate\Http\Response
@@ -92,7 +97,7 @@ class CategoriesController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     * @Permission\Action(name="destroy", description="Excluir categorias")
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param Category $category

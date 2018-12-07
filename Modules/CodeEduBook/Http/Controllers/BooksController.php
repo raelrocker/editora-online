@@ -12,6 +12,12 @@ use CodeEduBook\Repositories\BookRepository;
 use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
+use CodeEduUser\Http\Requests\PermissionRequest;
+use CodeEduUser\Annotations\Mapping as Permission;
+
+/**
+ * @Permission\Controller(name="books-admin", description="Administração de livros")
+ */
 class BooksController extends Controller
 {
     /**
@@ -35,7 +41,7 @@ class BooksController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @Permission\Action(name="list", description="Ver listagem de livros")
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -48,7 +54,7 @@ class BooksController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @Permission\Action(name="store", description="Criar livros")
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -59,7 +65,7 @@ class BooksController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @Permission\Action(name="store", description="Criar livros")
      * @param BookCreateRequest|BookRequest|Request $request
      * @return \Illuminate\Http\Response
      */
@@ -76,7 +82,7 @@ class BooksController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * @Permission\Action(name="update", description="Atualizar livros")
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param Book $book
@@ -94,7 +100,7 @@ class BooksController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * @Permission\Action(name="update", description="Atualizar livros")
      * @param BookRequest|BookUpdateRequest|Request $request
      * @param $id
      * @return \Illuminate\Http\Response
@@ -112,7 +118,7 @@ class BooksController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     * @Permission\Action(name="destroy", description="Excluir livros")
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param Book $book
