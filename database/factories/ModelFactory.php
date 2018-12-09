@@ -24,6 +24,12 @@ $factory->define(\CodeEduUser\Models\User::class, function (Faker\Generator $fak
     ];
 });
 
+$factory->state(\CodeEduUser\Models\User::class, 'author', function($faker) {
+    return [
+        'email' => 'author@editora.com'
+    ];
+});
+
 $factory->define(\CodeEduBook\Models\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => ucfirst($faker->unique()->word),
