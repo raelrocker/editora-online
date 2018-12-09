@@ -12,7 +12,7 @@ use CodeEduUser\Models\Role;
  */
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {
-
+    /*
     public function update(array $attributes, $id) {
         $model = parent::update($attributes, $id);
         if (isset($attributes['permissions'])) {
@@ -21,7 +21,7 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
             $model->permissions()->detach();
         }
         return $model;
-    }
+    }*/
     
     /**
      * Specify Model class name
@@ -39,5 +39,15 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function updatePermissions(array $permissions, $id)
+    {
+        $model = parent::find($id);
+        $model->permissions()->detach();
+        if (count($permissions)) {
+            $model->permissions()->sync($permissions);
+        }
+        return $model;
     }
 }
