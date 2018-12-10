@@ -28,7 +28,8 @@
                 $arrayLinks = [
                     [
                         'link' => route('categories.index'),
-                        'title' => 'Categoria'
+                        'title' => 'Categoria',
+                        'permission' => 'categorias-admin/list'
                     ],
                     [
                         'Livro',
@@ -36,31 +37,32 @@
                             [
                                 'link' => route('books.index'),
                                 'title' => 'Listar',
+                                'permission' => 'books-admin/list'
                             ],
                             [
                                 'link' => route('trashed.books.index'),
                                 'title' => 'Lixeira',
+                                'permission' => 'books-trashed-admin/list'
                             ]
                         ]
                     ],
-                    
-                ];
-                if (Auth::user()->can('users-admin/lists')) {
-                    $arrayLinks[] = [
+                    [
                         'Usuários',
                         [
-                                [
-                                        'link' => route('codeeduuser.users.index'),
-                                        'title' => 'Listar',
-                                ],
-                                [
-                                        'link' => route('codeeduuser.roles.index'),
-                                        'title' => 'Papel de usuário',
-                                ]
+                            [
+                                    'link' => route('codeeduuser.users.index'),
+                                    'title' => 'Listar',
+                                    'permission' => 'user-admin/list'
+                            ],
+                            [
+                                    'link' => route('codeeduuser.roles.index'),
+                                    'title' => 'Papel de usuário',
+                                    'permission' => 'roles-admin/list'
+                            ]
                         ]
-                    ];
-                }
-                $links = Navigation::links($arrayLinks);
+                    ]
+                ];
+                $links = Navigation::links(\NavbarAuthorization::getLinksAuthorized($arrayLinks));
                 $logout = Navigation::links([
                     [
                         Auth::user()->name,
