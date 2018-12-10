@@ -2,13 +2,13 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Novo Livro</h3>
-            {!! Form::open(['route' => 'books.store', 'class' => 'form']) !!}
+            <h3>Novo capítulo - Livro: {{ $book->title }}</h3>
+            {!! Form::open(['route' => ['chapters.store', 'book' => $book->id], 'class' => 'form']) !!}
 
-            @include('codeedubook::book._form')
+            @include('codeedubook::chapters._form')
 
             {!! Html::openFormGroup() !!}
-                {!! Button::primary('Criar livro')->submit() !!}
+                {!! Button::primary('Criar capítulo')->submit() !!}
             {!! Html::closeFormGroup() !!}
 
             {!! Form::close() !!}

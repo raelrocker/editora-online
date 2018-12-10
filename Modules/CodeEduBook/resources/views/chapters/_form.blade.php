@@ -1,25 +1,18 @@
 {!! Form::hidden('redirect_to', URL::previous()) !!}
-{!! Html::openFormGroup('title', $errors) !!}
-    {!! Form::label('title', 'Title') !!}
-    {!! Form::text('title', null, ['class' => 'form-control']) !!}
-    {!! Form::error('title', $errors) !!}
+{!! Html::openFormGroup('name', $errors) !!}
+    {!! Form::label('name', 'Nome') !!}
+    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    {!! Form::error('name', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-{!! Html::openFormGroup('subtitle', $errors) !!}
-    {!! Form::label('subtitle', 'Subtitle') !!}
-    {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
-    {!! Form::error('subtitle', $errors) !!}
+{!! Html::openFormGroup('order', $errors) !!}
+    {!! Form::label('order', 'Ordem') !!}
+    {!! Form::text('order', 1, ['class' => 'form-control']) !!}
+    {!! Form::error('order', $errors) !!}
 {!! Html::closeFormGroup() !!}
 
-{!! Html::openFormGroup('price', $errors) !!}
-    {!! Form::label('price', 'Price') !!}
-    {!! Form::text('price', null, ['class' => 'form-control']) !!}
-    {!! Form::error('price', $errors) !!}
-{!! Html::closeFormGroup() !!}
-
-{!! Html::openFormGroup(['categories', 'categories.*'], $errors) !!}
-    {!! Form::label('categories[]', 'Categorias') !!}
-    {!! Form::select('categories[]', $categories, null, ['class' => 'form-control', 'multiple' => 'true']) !!}
-    {!! Form::error('categories', $errors) !!}
-    {!! Form::error('categories.*', $errors) !!}
+{!! Html::openFormGroup('content', $errors) !!}
+    {!! Form::label('content', 'Conteúdo') !!}
+    {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+    {!! Form::error('content', $errors) !!}
 {!! Html::closeFormGroup() !!}

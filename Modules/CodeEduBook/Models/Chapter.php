@@ -10,7 +10,8 @@ class Chapter extends Model implements TableInterface
     protected $fillable = [
         'name',
         'content',
-        'order'
+        'order',
+        'book_id'
     ];
 
     public function book()

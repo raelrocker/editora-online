@@ -10,6 +10,8 @@ use CodeEduBook\Repositories\BookRepository;
 use Illuminate\Http\Request;
 use CodeEduBook\Repositories\ChapterRepository;
 use CodeEduBook\Criteria\FindByBook;
+use CodeEduBook\Http\Requests\ChapterCreateRequest;
+use CodeEduBook\Models\Book;
 
 use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
@@ -46,11 +48,10 @@ class ChaptersController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, Book $book)
     {
-        $book = $this->bookRepository->find($id);
         $search = $request->get('search');
-        $this->repository->pushCriteria(new FindByBook($id));
+        $this->repository->pushCriteria(new FindByBook($book->id));
         $chapters = $this->repository->paginate(10);
         
         return view('codeedubook::chapters.index', compact('chapters', 'search', 'book'));
@@ -58,28 +59,27 @@ class ChaptersController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @Permission\Action(name="store", description="Criar livros")
+     * @Permission\Action(name="store", description="Capítulos")
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Book $book)
     {
-        $categories = $this->categoryRepository->lists('name', 'id');
-        return view('codeedubook::book.create', compact('categories'));
+        return view('codeedubook::chapters.create', compact('book'));
     }
 
     /**
      * Store a newly created resource in storage.
-     * @Permission\Action(name="store", description="Criar livros")
+     * @Permission\Action(name="store", description="Capítulos")
      * @param BookCreateRequest|BookRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BookCreateRequest $request)
+    public function store(ChapterCreateRequest $request, Book $book)
     {
         $data = $request->all();
-        $data['user_id'] = \Auth::user()->id;
+        $data['book_id'] = $book->id;
         $this->repository->create($data);
-        $url = $request->get('redirect_to', route('books.index'));
-        $request->session()->flash('message', 'Livro cadastrado com sucesso.');
+        $url = $request->get('redirect_to', route('chapters.index', ['book', $book->id]));
+        $request->session()->flash('message', 'Capítulo cadastrado com sucesso.');
         return redirect()->to($url);
     }
 

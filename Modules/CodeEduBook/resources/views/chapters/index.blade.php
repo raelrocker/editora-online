@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <h3>Capítulos de {{$book->title}}</h3>
-            {!! Button::primary('Novo capítulo')->asLinkTo(route('books.create', ['book' => $book->id])) !!}
+            {!! Button::primary('Novo capítulo')->asLinkTo(route('chapters.create', ['book' => $book->id])) !!}
         </div>
         <br>
         <div class="row">
