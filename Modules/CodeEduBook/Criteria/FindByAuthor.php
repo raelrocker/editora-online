@@ -19,7 +19,7 @@ class FindByAuthor implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        if (!\Auth::user()->isAdmin()) {
+        if (!\Auth::user()->can(config('codeedubook.acl.permissions.book_manage_all'))) {
             return $model->where('user_id', \Auth::user()->id);
         }
         return $model;
