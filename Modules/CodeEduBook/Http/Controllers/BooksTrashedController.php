@@ -3,6 +3,7 @@
 namespace CodeEduBook\Http\Controllers;
 
 
+use CodeEduBook\Criteria\FindByAuthor;
 use CodeEduBook\Models\Book;
 use CodeEduBook\Repositories\BookRepository;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class BooksTrashedController extends Controller
     public function __construct(BookRepository $repository)
     {
         $this->repository = $repository;
+        $this->repository->pushCriteria(new FindByAuthor());
     }
 
     /**

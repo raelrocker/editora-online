@@ -47,3 +47,9 @@ $factory->define(\CodeEduBook\Models\Book::class, function (Faker\Generator $fak
     ];
 });
 
+$factory->define(\CodeEduBook\Models\Chapter::class, function(\Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence(2),
+        'content' => $faker->paragraph(20)
+    ];
+});
