@@ -16,3 +16,5 @@
     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
     {!! Form::error('content', $errors) !!}
 {!! Html::closeFormGroup() !!}
+
+@include('codeedubook::chapters._ckeditor')
