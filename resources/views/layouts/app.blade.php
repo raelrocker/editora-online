@@ -101,5 +101,9 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src='/js/ckeditor/ckeditor.js'></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('content');
+    </script>  
 </body>
 </html>
