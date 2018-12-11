@@ -108,10 +108,10 @@ class BooksController extends Controller
      * @internal param Book $book
      * @internal param int $id
      */
-    public function update(BookUpdateRequest $request, $id)
+    public function update(BookUpdateRequest $request, Book $book)
     {
         $data = $request->except(['user_id']);
-        $this->repository->update($data, $id);
+        $this->repository->update($data, $book->id);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Livro alterado com sucesso.');
         return redirect()->to($url);
@@ -125,9 +125,9 @@ class BooksController extends Controller
      * @internal param Book $book
      * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $this->repository->delete($id);
+        $this->repository->delete($book->id);
         \Session::flash('message', 'Livro excluída com sucesso.');
         return redirect()->route('books.index');
     }
