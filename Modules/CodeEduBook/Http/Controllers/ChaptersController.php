@@ -12,6 +12,7 @@ use CodeEduBook\Repositories\ChapterRepository;
 use CodeEduBook\Criteria\FindByBook;
 use CodeEduBook\Http\Requests\ChapterCreateRequest;
 use CodeEduBook\Models\Book;
+use CodeEduBook\Http\Requests\ChapterUpdateRequest;
 
 use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
@@ -93,13 +94,11 @@ class ChaptersController extends Controller
      * @internal param Book $books
      * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Book $book, $chapterId)
     {
-        $book = $this->repository->find($id);
-        //$categories = $this->categoryRepository->lists('name', 'id');
-        $this->categoryRepository->withTrashed();
-        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
-        return view('codeedubook::book.edit', compact('book', 'categories'));
+        $this->bookRepository->pushCriteria(new FindByBook($book->id));
+        $chapter = $this->repository->find($chapterId);
+        return view('codeedubook::chapters.edit', compact('book', 'chapter'));
     }
 
     /**
@@ -111,12 +110,13 @@ class ChaptersController extends Controller
      * @internal param Book $book
      * @internal param int $id
      */
-    public function update(BookUpdateRequest $request, $id)
+    public function update(ChapterUpdateRequest $request, Book $book, $chapterId)
     {
-        $data = $request->except(['user_id']);
-        $this->repository->update($data, $id);
-        $url = $request->get('redirect_to', route('books.index'));
-        $request->session()->flash('message', 'Livro alterado com sucesso.');
+        $this->bookRepository->pushCriteria(new FindByBook($book->id));
+        $data = $request->except(['book_id']);
+        $this->repository->update($data, $chapterId);
+        $url = $request->get('redirect_to', route('chapters.index', ['book' => $book->id]));
+        $request->session()->flash('message', 'Capítulo alterado com sucesso.');
         return redirect()->to($url);
     }
 

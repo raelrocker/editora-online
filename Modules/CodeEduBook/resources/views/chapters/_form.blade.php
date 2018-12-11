@@ -7,7 +7,7 @@
 
 {!! Html::openFormGroup('order', $errors) !!}
     {!! Form::label('order', 'Ordem') !!}
-    {!! Form::text('order', 1, ['class' => 'form-control']) !!}
+    {!! Form::text('order', isset($chapter) ? $chapter->order : 1, ['class' => 'form-control']) !!}
     {!! Form::error('order', $errors) !!}
 {!! Html::closeFormGroup() !!}
 

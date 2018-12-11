@@ -2,22 +2,17 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h3>Editar Livro</h3>
-            {!! Form::model($book, [
-                'route' => ['books.update', 'book' => $book->id],
+            <h3>Editar Capítulo -  Livro: {{$book->title}}</h3>
+            {!! Form::model($chapter, [
+                'route' => ['chapters.update', 'book' => $book->id, 'chapter' => $chapter->id],
                 'class' => 'form',
                 'method' => 'PUT'
             ]) !!}
-
-            {!! Html::openFormGroup('author', $errors) !!}
-                {!! Form::label('author', 'Author') !!}
-                {!! Form::text('author', $book->user->name, ['class' => 'form-control', 'readonly' => 'true']) !!}
-            {!! Html::closeFormGroup() !!}
-
-            @include('codeedubook::book._form')
+            
+            @include('codeedubook::chapters._form')
 
             {!! Html::openFormGroup() !!}
-                {!! Button::primary('Salvar livro')->submit() !!}
+                {!! Button::primary('Salvar capítulo')->submit() !!}
             {!! Html::closeFormGroup() !!}
 
             {!! Form::close() !!}
