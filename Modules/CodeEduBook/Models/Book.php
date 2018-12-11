@@ -17,7 +17,17 @@ class Book extends Model implements TableInterface
     protected $dates = ['deleted_at'];
 
 
-    protected $fillable = ['title', 'subtitle', 'price', 'user_id'];
+    protected $fillable = [
+        'title', 
+        'subtitle', 
+        'price', 
+        'user_id',
+        'dedication',
+        'description',
+        'website',
+        'percent_complete',
+        'published'
+    ];
 
     public function user()
     {
