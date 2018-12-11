@@ -26,7 +26,7 @@ class Chapter extends Model implements TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'Nome'];
+        return ['#', 'Nome', 'Ordem'];
     }
 
     /**
@@ -43,6 +43,8 @@ class Chapter extends Model implements TableInterface
                 return $this->id;
             case 'Nome':
                 return $this->name;
+            case 'Ordem':
+                return $this->order;
         }
     }
 }

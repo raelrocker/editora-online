@@ -13,6 +13,7 @@ use CodeEduBook\Criteria\FindByBook;
 use CodeEduBook\Http\Requests\ChapterCreateRequest;
 use CodeEduBook\Models\Book;
 use CodeEduBook\Http\Requests\ChapterUpdateRequest;
+use CodeEduBook\Criteria\OrderByOrder;
 
 use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
@@ -52,7 +53,9 @@ class ChaptersController extends Controller
     public function index(Request $request, Book $book)
     {
         $search = $request->get('search');
-        $this->repository->pushCriteria(new FindByBook($book->id));
+        $this->repository
+                ->pushCriteria(new FindByBook($book->id))
+                ->pushCriteria(new OrderByOrder());
         $chapters = $this->repository->paginate(10);
         
         return view('codeedubook::chapters.index', compact('chapters', 'search', 'book'));
