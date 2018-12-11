@@ -12,7 +12,7 @@ use CodeEduBook\Models\Category;
 use CodeEduBook\Repositories\BookRepository;
 use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
-
+use CodeEduBook\Models\Book;
 use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
 
@@ -91,9 +91,8 @@ class BooksController extends Controller
      * @internal param Book $books
      * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Book $book)
     {
-        $book = $this->repository->find($id);
         //$categories = $this->categoryRepository->lists('name', 'id');
         $this->categoryRepository->withTrashed();
         $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');

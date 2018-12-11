@@ -128,10 +128,11 @@ class ChaptersController extends Controller
      * @internal param Book $book
      * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(Book $book, $chapterId)
     {
-        $this->repository->delete($id);
-        \Session::flash('message', 'Livro excluída com sucesso.');
-        return redirect()->route('books.index');
+        $this->bookRepository->pushCriteria(new FindByBook($book->id));
+        $this->repository->delete($chapterId);
+        \Session::flash('message', 'Capítulo excluída com sucesso.');
+        return redirect()->to(\URL::previous());
     }
 }

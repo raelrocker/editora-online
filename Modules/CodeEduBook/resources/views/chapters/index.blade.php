@@ -26,7 +26,7 @@
                                     'route' => ['chapters.destroy', 'book' => $book->id, 'chapter' => $chapter->id],
                                     'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display: none']) .
                                 Form::close();
-                         $anchorDestroy = Button::link('Ir para a lixeira')->asLinkTo($linkDestroy)
+                         $anchorDestroy = Button::link('Excluir')->asLinkTo($linkDestroy)
                                             ->addAttributes([
                                                 'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteForm}\").submit();"
                                             ]);
