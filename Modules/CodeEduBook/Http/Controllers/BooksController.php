@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use CodeEduBook\Models\Book;
 use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
+use CodeEduBook\Http\Requests\BookCoverRequest;
 
 /**
  * @Permission\Controller(name="books-admin", description="Administração de livros")
@@ -131,5 +132,24 @@ class BooksController extends Controller
         $this->repository->delete($book->id);
         \Session::flash('message', 'Livro excluída com sucesso.');
         return redirect()->route('books.index');
+    }
+    
+    /**
+     * @Permission\Action(name="cover", description="Cover de livros")
+     * @param Book $book
+     * @return type
+     */
+    public function coverForm(Book $book)
+    {
+        return view('codeedubook::book.cover', compact('book'));
+    }
+    
+    /**
+     * @Permission\Action(name="cover", description="Cover de livros")
+     * @return type
+     */
+    public function coverStore(BookCoverRequest $request, Book $book)
+    {
+        
     }
 }
