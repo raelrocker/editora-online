@@ -16,6 +16,7 @@ use CodeEduBook\Models\Book;
 use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
 use CodeEduBook\Http\Requests\BookCoverRequest;
+use CodeEduBook\Pub\BookCoverUpload;
 
 /**
  * @Permission\Controller(name="books-admin", description="Administração de livros")
@@ -148,8 +149,11 @@ class BooksController extends Controller
      * @Permission\Action(name="cover", description="Cover de livros")
      * @return type
      */
-    public function coverStore(BookCoverRequest $request, Book $book)
+    public function coverStore(BookCoverRequest $request, Book $book, BookCoverUpload $upload)
     {
-        
+        $upload->upload($book, $request->file('file'));
+        $url = $request->get('redirect_to', route('books.index'));
+        $request->session()->flash('message', 'Cover adicionado com sucesso.');
+        return redirect()->to($url);
     }
 }

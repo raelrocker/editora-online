@@ -13,6 +13,8 @@ class Book extends Model implements TableInterface
     use FormAccessible;
 
     use SoftDeletes;
+    
+    use BookStorageTrait;
 
     protected $dates = ['deleted_at'];
 
