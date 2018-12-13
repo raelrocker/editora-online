@@ -6,8 +6,8 @@ trait BookStorageTrait
 {
     public function getDiskAttribute()
     {
-        $bookStorageDriver = config('codeedubook.book_Storage');
-        return config("filesystems.disk.{$bookStorageDriver}.root");
+        $bookStorageDriver = config('codeedubook.book_storage');
+        return config("filesystems.disks.{$bookStorageDriver}.root");
     }
     
     public function getCoverEbookNameAttribute()

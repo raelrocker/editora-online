@@ -17,8 +17,8 @@ return [
     'acl' => [
         'role_admin' => env('ROLE_ADMIN', 'Admin'),
         'controllers_annotations' => [
-            //__DIR__ . '\..\Http\Controllers',
-            //__DIR__ . '\..\..\CodeEduBook\Http\Controllers'
+            //  __DIR__ . '\..\Http\Controllers',
+            //__DIR__ . '/../../CodeEduBook/Http/Controllers'
             'C:\Users\rael\Projects\editora\Modules\CodeEduUser\Http\Controllers',
             'C:\Users\rael\Projects\editora\Modules\CodeEduBook\Http\Controllers'
         ]
