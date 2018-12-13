@@ -15,6 +15,8 @@ class Book extends Model implements TableInterface
     use SoftDeletes;
     
     use BookStorageTrait;
+    
+    use BookThumbnailTrait;
 
     protected $dates = ['deleted_at'];
 

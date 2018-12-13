@@ -4,6 +4,7 @@ namespace CodeEduBook\Providers;
 
 use CodePub\Providers\RepositoryServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use Folklore\Image\ImageServiceProvider;
 
 class CodeEduBookServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,7 @@ class CodeEduBookServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(\CodeEduBook\Providers\RepositoryServiceProvider::class);
         $this->app->register(\CodeEduBook\Providers\AuthServiceProvider::class);
+        $this->app->register(ImageServiceProvider::class);
     }
 
     /**
