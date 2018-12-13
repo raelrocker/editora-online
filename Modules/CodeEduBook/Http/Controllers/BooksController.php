@@ -156,4 +156,11 @@ class BooksController extends Controller
         $request->session()->flash('message', 'Cover adicionado com sucesso.');
         return redirect()->to($url);
     }
+    
+    public function export(Book $book)
+    {
+        $bookExport = app(\CodeEduBook\Pub\BookExport::class);
+        $bookExport->export($book);
+        return redirect()->route('books.index');
+    }
 }

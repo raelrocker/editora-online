@@ -50,6 +50,11 @@ trait BookStorageTrait
         return "{$this->pdf_template_storage}/{$this->cover_pdf_name}";
     }
     
+    public function getConfigFileAttribute()
+    {
+        return "{$this->book_storage}/config.yml";
+    }
+    
     public function getTemplateConfigFileAttribute()
     {
         return "{$this->disk}/template/config.yml";
@@ -60,8 +65,5 @@ trait BookStorageTrait
         return "{$this->book_storage}/Contents";
     }
     
-    public function getConfigFileAttribute()
-    {
-        return "{$this->book_storage}/config.yml";
-    }
+    
 }
