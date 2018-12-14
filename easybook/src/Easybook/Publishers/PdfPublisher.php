@@ -181,6 +181,7 @@ class PdfPublisher extends BasePublisher
     public function addBookCover($bookFilePath, $coverFilePath)
     {
         if (!empty($coverFilePath)) {
+            
             $pdfBook  = PdfDocument::load($bookFilePath);
             $pdfCover = PdfDocument::load($coverFilePath);
 

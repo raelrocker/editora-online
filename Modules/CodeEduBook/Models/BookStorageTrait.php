@@ -65,5 +65,14 @@ trait BookStorageTrait
         return "{$this->book_storage}/Contents";
     }
     
+    public function getOutputStorageAttribute()
+    {
+        return "{$this->book_storage}/Output";
+    }
     
+    public function getZipFileAttribute()
+    {
+        $titleSlug = str_slug($this->title,'-');
+        return "{$this->book_storage}/book-$titleSlug.zip";
+    }
 }

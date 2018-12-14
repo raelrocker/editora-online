@@ -17,6 +17,7 @@ use CodeEduUser\Http\Requests\PermissionRequest;
 use CodeEduUser\Annotations\Mapping as Permission;
 use CodeEduBook\Http\Requests\BookCoverRequest;
 use CodeEduBook\Pub\BookCoverUpload;
+use CodeEduBook\Pub\BookExport;
 
 /**
  * @Permission\Controller(name="books-admin", description="Administração de livros")
@@ -159,8 +160,9 @@ class BooksController extends Controller
     
     public function export(Book $book)
     {
-        $bookExport = app(\CodeEduBook\Pub\BookExport::class);
+        $bookExport = app(BookExport::class);
         $bookExport->export($book);
+        $bookExport->compress($book);
         return redirect()->route('books.index');
     }
 }

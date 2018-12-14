@@ -7,7 +7,7 @@
  use CodeEduBook\Criteria\OrderByOrder;
  use Symfony\Component\Yaml\Parser;
  use Symfony\Component\Yaml\Dumper;
- 
+ use CodeEduBook\Util\ExtendedZip;
  class BookExport
  {
 
@@ -71,5 +71,10 @@
          foreach ($chapters as $chapter) {
              file_put_contents("{$book->contents_storage}/{$chapter->order}.md", $chapter->content);
          }
+     }
+     
+     public function compress(Book $book)
+     {
+         ExtendedZip::zipTree($book->output_storage, $book->zip_file, ExtendedZip::CREATE);
      }
  }
