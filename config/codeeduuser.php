@@ -19,8 +19,8 @@ return [
         'controllers_annotations' => [
             //  __DIR__ . '\..\Http\Controllers',
             //__DIR__ . '/../../CodeEduBook/Http/Controllers'
-            'C:\Users\rael\Projects\editora\Modules\CodeEduUser\Http\Controllers',
-            'C:\Users\rael\Projects\editora\Modules\CodeEduBook\Http\Controllers'
+            'C:\Users\Israel\Documents\Editora\editora-online\Modules\CodeEduUser\Http\Controllers',
+            'C:\Users\Israel\Documents\Editora\editora-online\Modules\CodeEduBook\Http\Controllers'
         ]
     ]
 ];
