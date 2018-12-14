@@ -6,6 +6,7 @@ Route::group(['middleware' => ['auth', config('codeeduuser.middleware.isVerified
         Route::get('cover', 'BooksController@coverForm')->name('books.cover.create');
         Route::post('cover', 'BooksController@coverStore')->name('books.cover.store');
         Route::post('export', 'BooksController@export')->name('books.export');
+        Route::get('download', 'BooksController@download')->name('books.download');
         Route::resource('chapters', 'ChaptersController', [
             'except' => ['show']
         ]);

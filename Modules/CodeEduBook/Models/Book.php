@@ -55,7 +55,7 @@ class Book extends Model implements TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'title', 'subtitle', 'price', 'author'];
+        return ['#', 'Título', 'Autor', 'Preço'];
     }
 
     /**
@@ -70,8 +70,15 @@ class Book extends Model implements TableInterface
         switch ($header) {
             case '#':
                 return $this->id;
-            case 'author':
+            case 'Autor':
                 return $this->user->name;
+            case 'Título':
+                if(file_exists($this->zip_file)) {
+                    $route = route('books.download', ['id' => $this->id]);
+                    return "<a href=\"$route\" target=\"_blank\">{$this->title}</a>";
+                } else {
+                    return $this->title;
+                }
             default:
                 return $this->$header;
         }
