@@ -3,6 +3,7 @@
 namespace CodeEduBook\Http\Controllers;
 
 use CodeEduBook\Criteria\FindByAuthor;
+use CodeEduBook\Jobs\GenerateBook;
 use CodePub\Criteria\FindByAuthorCriteria;
 use CodePub\Criteria\FindByTitleCriteria;
 use CodeEduBook\Http\Requests\BookCreateRequest;
@@ -160,9 +161,7 @@ class BooksController extends Controller
     
     public function export(Book $book)
     {
-        $bookExport = app(BookExport::class);
-        $bookExport->export($book);
-        $bookExport->compress($book);
+        dispatch(new GenerateBook($book));
         return redirect()->route('books.index');
     }
     
