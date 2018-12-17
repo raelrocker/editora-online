@@ -44,5 +44,6 @@ class GenerateBook implements ShouldQueue
         exec("php " . base_path("$easyBookCmd kindle"));
         exec("php " . base_path("$easyBookCmd ebook"));
         $bookExport->compress($this->book);
+        throw new \Exception("Job falhou");
     }
 }
