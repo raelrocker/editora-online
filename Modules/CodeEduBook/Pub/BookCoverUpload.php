@@ -11,7 +11,10 @@
      {
         \Storage::disk(config('codeedubook.book_storage'))
                 ->putFileAs($book->ebook_template, $cover, $book->cover_ebook_name);
-        
+
+        \Storage::disk(config('codeedubook.book_storage'))
+             ->putFileAs($book->kindle_template, $cover, $book->cover_kindle_name);
+
         $this->makeCoverPdf($book);
         $this->makeThumbnail($book);
      }
@@ -28,6 +31,8 @@
          
          $img->writeimage($book->cover_pdf_file);
      }
+
+
      
      protected function makeThumbnail(Book $book)
      {

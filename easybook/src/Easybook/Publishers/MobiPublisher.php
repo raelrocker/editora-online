@@ -25,7 +25,7 @@ class MobiPublisher extends Epub2Publisher
 
     public function checkIfThisPublisherIsSupported()
     {
-        if (null != $this->app['kindlegen.path'] && file_exists($this->app['kindlegen.path'])) {
+        if (null !== $this->app['kindlegen.path'] && file_exists($this->app['kindlegen.path'])) {
             $kindleGenPath = $this->app['kindlegen.path'];
         } else {
             $kindleGenPath = $this->findKindleGenPath();
@@ -33,7 +33,7 @@ class MobiPublisher extends Epub2Publisher
 
         $this->app['kindlegen.path'] = $kindleGenPath;
 
-        return null != $kindleGenPath && file_exists($kindleGenPath);
+        return null !== $kindleGenPath && file_exists($kindleGenPath);
     }
 
     public function assembleBook()
@@ -42,7 +42,7 @@ class MobiPublisher extends Epub2Publisher
 
         $epubFilePath = $this->app['publishing.dir.output'].'/book.epub';
 
-        $command = sprintf("%s %s -o book.mobi %s",
+        $command = sprintf('%s %s -o book.mobi %s',
             $this->app['kindlegen.path'],
             $this->app['kindlegen.command_options'],
             $epubFilePath
@@ -61,6 +61,7 @@ class MobiPublisher extends Epub2Publisher
      * Looks for the executable of the Amazon KindleGen library.
      *
      * @return string The absolute path of the executable
+     *
      * @throws \RuntimeException If the KindleGen executable is not found
      */
     private function findKindleGenPath()
@@ -73,7 +74,7 @@ class MobiPublisher extends Epub2Publisher
 
         // the executable couldn't be found in the common
         // installation directories. Ask the user for the path
-        $isInteractive = null != $this->app['console.input'] && $this->app['console.input']->isInteractive();
+        $isInteractive = null !== $this->app['console.input'] && $this->app['console.input']->isInteractive();
         if (!$isInteractive) {
             $sampleYamlConfiguration = <<<YAML
   easybook:
@@ -89,7 +90,7 @@ YAML;
                 "ERROR: The KindleGen library needed to generate MOBI books cannot be found.\n"
                     ." Check that you have installed KindleGen in a common directory \n"
                     ." or set your custom KindleGen path in the book's config.yml file:\n\n"
-                    ."%s",
+                    .'%s',
                 $sampleYamlConfiguration
             ));
         }

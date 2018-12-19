@@ -16,13 +16,13 @@ class TwigCssExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'lighten'       => new \Twig_Function_Method($this, 'lighten'),
-            'darken'        => new \Twig_Function_Method($this, 'darken'),
-            'fade'          => new \Twig_Function_Method($this, 'fade'),
-            'css_add'       => new \Twig_Function_Method($this, 'css_add'),
-            'css_substract' => new \Twig_Function_Method($this, 'css_substract'),
-            'css_multiply'  => new \Twig_Function_Method($this, 'css_multiply'),
-            'css_divide'    => new \Twig_Function_Method($this, 'css_divide'),
+            'lighten' => new \Twig_Function_Method($this, 'lighten'),
+            'darken' => new \Twig_Function_Method($this, 'darken'),
+            'fade' => new \Twig_Function_Method($this, 'fade'),
+            'css_add' => new \Twig_Function_Method($this, 'cssAdd'),
+            'css_substract' => new \Twig_Function_Method($this, 'cssSubstract'),
+            'css_multiply' => new \Twig_Function_Method($this, 'cssMultiply'),
+            'css_divide' => new \Twig_Function_Method($this, 'cssDivide'),
 
         );
     }
@@ -87,11 +87,11 @@ class TwigCssExtension extends \Twig_Extension
      * Examples: css_add('250px', 30) => returns '280px'
      *           css_add('8in', 12)   => returns '20in'
      */
-    public function css_add($length, $factor)
+    public function cssAdd($length, $factor)
     {
         return preg_replace_callback(
             '/(?<value>[\d\.]*)(?<unit>[a-z]{2})/i',
-            function($matches) use ($factor) {
+            function ($matches) use ($factor) {
                 $unit = isset($matches['unit']) ? $matches['unit'] : 'px';
 
                 return ($matches['value'] + $factor).$unit;
@@ -105,11 +105,11 @@ class TwigCssExtension extends \Twig_Extension
      * Examples: css_substract('250px', 50) => returns '200px'
      *           css_substract('8in', 2)   => returns '6in'
      */
-    public function css_substract($length, $factor)
+    public function cssSubstract($length, $factor)
     {
         return preg_replace_callback(
             '/(?<value>[\d\.]*)(?<unit>[a-z]{2})/i',
-            function($matches) use ($factor) {
+            function ($matches) use ($factor) {
                 $unit = isset($matches['unit']) ? $matches['unit'] : 'px';
 
                 return ($matches['value'] - $factor).$unit;
@@ -123,11 +123,11 @@ class TwigCssExtension extends \Twig_Extension
      * Examples: css_multiply('250px', 2) => returns '500px'
      *           css_multiply('8in', 4)   => returns '32in'
      */
-    public function css_multiply($length, $factor)
+    public function cssMultiply($length, $factor)
     {
         return preg_replace_callback(
             '/(?<value>[\d\.]*)(?<unit>[a-z]{2})/i',
-            function($matches) use ($factor) {
+            function ($matches) use ($factor) {
                 $unit = isset($matches['unit']) ? $matches['unit'] : 'px';
 
                 return ($matches['value'] * $factor).$unit;
@@ -141,7 +141,7 @@ class TwigCssExtension extends \Twig_Extension
      * Examples: css_divide('250px', 2) => returns '125px'
      *           css_divide('80in', 4)  => returns '20in'
      */
-    public function css_divide($length, $factor)
+    public function cssDivide($length, $factor)
     {
         if (0 == $factor) {
             return 0;
@@ -149,7 +149,7 @@ class TwigCssExtension extends \Twig_Extension
 
         return preg_replace_callback(
             '/(?<value>[\d\.]*)(?<unit>[a-z]{2})/i',
-            function($matches) use ($factor) {
+            function ($matches) use ($factor) {
                 $unit = isset($matches['unit']) ? $matches['unit'] : 'px';
 
                 return ($matches['value'] / $factor).$unit;
@@ -160,13 +160,24 @@ class TwigCssExtension extends \Twig_Extension
 
     // -- Internal methods to convert between units ---------------------------
 
+    /**
+     * Transforms the given hexadecimal color string into an RGB array.
+     *
+     * @param  string $hex
+     * @return array
+     */
     private function hex2rgb($hex)
     {
         $hex = str_replace('#', '', $hex);
 
         // expand shorthand notation #36A -> #3366AA
         if (3 == strlen($hex)) {
-            $hex = $hex{0}.$hex{0}.$hex{1}.$hex{1}.$hex{2}.$hex{2};
+            $hex = $hex{0}
+            .$hex{0}
+            .$hex{1}
+            .$hex{1}
+            .$hex{2}
+            .$hex{2};
         }
 
         // expanded hex colors can only have 6 characters
@@ -175,17 +186,29 @@ class TwigCssExtension extends \Twig_Extension
         return array(
             hexdec(substr($hex, 0, 2)),
             hexdec(substr($hex, 2, 2)),
-            hexdec(substr($hex, 4, 2))
+            hexdec(substr($hex, 4, 2)),
         );
     }
 
-    private function rgb2hex($rgb)
+    /**
+     * Transforms the given RGB array into an hexadecimal color string.
+     *
+     * @param  array $rgb
+     * @return string
+     */
+    private function rgb2hex(array $rgb)
     {
         return sprintf('#%02s%02s%02s', dechex($rgb[0]), dechex($rgb[1]), dechex($rgb[2]));
     }
 
-    /* code copied from Drupal CMS */
-    private function rgb2hsl($rgb)
+    /**
+     * Transforms the given RGB color array into an HSL color array.
+     * Code copied from Drupal CMS project.
+     *
+     * @param  array $rgb
+     * @return array
+     */
+    private function rgb2hsl(array $rgb)
     {
         list($r, $g, $b) = $rgb;
         $r /= 255;
@@ -206,28 +229,46 @@ class TwigCssExtension extends \Twig_Extension
         $h = 0;
 
         if ($delta > 0) {
-            if ($max == $r && $max != $g) { $h += ($g - $b) / $delta;       }
-            if ($max == $g && $max != $b) { $h += (2 + ($b - $r) / $delta); }
-            if ($max == $b && $max != $r) { $h += (4 + ($r - $g) / $delta); }
+            if ($max == $r && $max != $g) {
+                $h += ($g - $b) / $delta;
+            }
+            if ($max == $g && $max != $b) {
+                $h += (2 + ($b - $r) / $delta);
+            }
+            if ($max == $b && $max != $r) {
+                $h += (4 + ($r - $g) / $delta);
+            }
             $h /= 6;
         }
 
         return array($h, $s, $l);
     }
 
-    /* code copied from Drupal CMS */
-    private function hsl2rgb($hsl)
+    /**
+     * Transforms the given HSL color array into an RGB color array.
+     * Code copied from Drupal CMS project.
+     *
+     * @param  array $hsl
+     * @return array
+     */
+    private function hsl2rgb(array $hsl)
     {
         list($h, $s, $l) = $hsl;
 
-        $m2 = ($l <= 0.5) ? $l * ( $s + 1 ) : $l + $s - $l * $s;
+        $m2 = ($l <= 0.5) ? $l * ($s + 1) : $l + $s - $l * $s;
         $m1 = $l * 2 - $m2;
 
         $hue = function ($base) use ($m1, $m2) {
-            $base = ($base < 0) ? $base + 1 : ( ($base > 1) ? $base - 1 : $base );
-            if ($base * 6 < 1) { return $m1 + ($m2 - $m1) * $base * 6; }
-            if ($base * 2 < 1) { return $m2; }
-            if ($base * 3 < 2) { return $m1 + ($m2 - $m1) * (0.66666 - $base) * 6; }
+            $base = ($base < 0) ? $base + 1 : (($base > 1) ? $base - 1 : $base);
+            if ($base * 6 < 1) {
+                return $m1 + ($m2 - $m1) * $base * 6;
+            }
+            if ($base * 2 < 1) {
+                return $m2;
+            }
+            if ($base * 3 < 2) {
+                return $m1 + ($m2 - $m1) * (0.66666 - $base) * 6;
+            }
 
             return $m1;
         };
@@ -235,7 +276,7 @@ class TwigCssExtension extends \Twig_Extension
         return array(
             $hue($h + 0.33333) * 255,
             $hue($h) * 255,
-            $hue($h - 0.33333) * 255
+            $hue($h - 0.33333) * 255,
         );
     }
 

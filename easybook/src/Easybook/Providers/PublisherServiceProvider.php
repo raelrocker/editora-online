@@ -11,8 +11,8 @@
 
 namespace Easybook\Providers;
 
-use Easybook\DependencyInjection\Application;
-use Easybook\DependencyInjection\ServiceProviderInterface;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Easybook\Publishers\Epub2Publisher;
 use Easybook\Publishers\HtmlPublisher;
 use Easybook\Publishers\HtmlChunkedPublisher;
@@ -21,9 +21,9 @@ use Easybook\Publishers\PdfPublisher;
 
 class PublisherServiceProvider implements ServiceProviderInterface
 {
-    public function register(Application $app)
+    public function register(Container $app)
     {
-        $app['publisher'] = $app->share(function ($app) {
+        $app['publisher'] = function ($app) {
             $outputFormat = $app->edition('format');
 
             switch (strtolower($outputFormat)) {
@@ -55,15 +55,15 @@ class PublisherServiceProvider implements ServiceProviderInterface
                     ));
             }
 
-            if (true != $publisher->checkIfThisPublisherIsSupported()) {
+            if (true !== $publisher->checkIfThisPublisherIsSupported()) {
                 throw new \RuntimeException(sprintf(
                     "Your system doesn't support publishing books with the '%s' format\n"
-                    ."Check the easybook documentation to know the dependencies required by this format.",
+                    .'Check the easybook documentation to know the dependencies required by this format.',
                     $outputFormat
                 ));
             }
 
             return $publisher;
-        });
+        };
     }
 }

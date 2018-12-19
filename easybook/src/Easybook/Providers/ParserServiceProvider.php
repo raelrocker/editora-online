@@ -11,22 +11,22 @@
 
 namespace Easybook\Providers;
 
-use Easybook\DependencyInjection\Application;
-use Easybook\DependencyInjection\ServiceProviderInterface;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Easybook\Parsers\MarkdownParser;
 
 class ParserServiceProvider implements ServiceProviderInterface
 {
-    public function register(Application $app)
+    public function register(Container $app)
     {
         $app['parser.options'] = array(
             // available syntaxes: 'original', 'php-markdown-extra', 'easybook'
-            'markdown_syntax'  => 'easybook',
+            'markdown_syntax' => 'easybook',
             // available types: 'markdown', 'fenced', 'github'
-            'code_block_type'  => 'markdown',
+            'code_block_type' => 'markdown',
         );
 
-        $app['parser'] = $app->share(function ($app) {
+        $app['parser'] = function ($app) {
             $format = strtolower($app['publishing.active_item']['config']['format']);
 
             if (in_array($format, array('md', 'mdown', 'markdown'))) {
@@ -38,6 +38,6 @@ class ParserServiceProvider implements ServiceProviderInterface
                 $format,
                 $app['publishing.active_item']['config']['content']
             ));
-        });
+        };
     }
 }

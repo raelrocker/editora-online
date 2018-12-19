@@ -12,6 +12,7 @@
 namespace Easybook\Console;
 
 use Symfony\Component\Console\Application as SymfonyConsoleApplication;
+use Easybook\Console\Command\AboutCommand;
 use Easybook\Console\Command\BookNewCommand;
 use Easybook\Console\Command\BookPublishCommand;
 use Easybook\Console\Command\BookCustomizeCommand;
@@ -34,21 +35,13 @@ class ConsoleApplication extends SymfonyConsoleApplication
 
         parent::__construct('easybook', $this->app->getVersion());
 
+        $this->add(new AboutCommand($this->app['app.signature']));
         $this->add(new BookNewCommand());
         $this->add(new BookPublishCommand());
         $this->add(new BookCustomizeCommand());
         $this->add(new EasybookVersionCommand());
         $this->add(new EasybookBenchmarkCommand());
-    }
 
-    public function getHelp()
-    {
-        $help = array(
-            $this->app['app.signature'],
-            '<info>easybook</info> is the <comment>easiest</comment> and <comment>fastest</comment> tool to generate',
-            'technical documentation, books, manuals and websites.'
-        );
-
-        return implode("\n", $help);
+        $this->setDefaultCommand('about');
     }
 }

@@ -17,7 +17,7 @@ use Easybook\DependencyInjection\Application;
 
 /**
  * Tests related to the render() method of the
- * Easybook\DependencyInjection\Application class
+ * Easybook\DependencyInjection\Application class.
  */
 class RenderTest extends TestCase
 {
@@ -28,7 +28,7 @@ class RenderTest extends TestCase
     public function setUp()
     {
         $this->app = new Application();
-        
+
         // setup temp dir for generated files
         $this->templateDir = $this->app['app.dir.cache'].'/'.uniqid('phpunit_', true);
         $this->filesystem = new Filesystem();
@@ -37,7 +37,7 @@ class RenderTest extends TestCase
         $this->app['twig.loader'] = new \Twig_Loader_Filesystem($this->templateDir);
 
         $this->app['publishing.book.config'] = array('book' => array(
-            'title' => 'Custom Test Book Title'
+            'title' => 'Custom Test Book Title',
         ));
     }
 
@@ -46,24 +46,22 @@ class RenderTest extends TestCase
         $this->filesystem->remove($this->templateDir);
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage (easybook only supports Twig)
+     */
     public function testNonTwigTemplate()
     {
-        try {
-            $this->app->render('template.tpl');
-        } catch (\RuntimeException $e) {
-            $this->assertInstanceOf('RuntimeException', $e);
-            $this->assertContains('(easybook only supports Twig)', $e->getMessage());
-        }
+        $this->app->render('template.tpl');
     }
 
+    /**
+     * @expectedException Twig_Error_Loader
+     * @expectedExceptionRegExp /Unable to find template (.*)/
+     */
     public function testUndefinedTwigTemplate()
     {
-        try {
-            $this->app->render('template.twig');
-        } catch (\Twig_Error_Loader $e) {
-            $this->assertInstanceOf('Twig_Error_Loader', $e);
-            $this->assertContains('Unable to find template', $e->getMessage());
-        }
+        $this->app->render('template.twig');
     }
 
     public function testSimpleTemplate()
@@ -97,7 +95,7 @@ class RenderTest extends TestCase
     public function testTemplateRenderedAsAFile()
     {
         $templateFileName = 'template.twig';
-        $targetFileName   = 'rendered.txt';
+        $targetFileName = 'rendered.txt';
         $expectedFileName = 'expected.txt';
 
         file_put_contents($this->templateDir.'/'.$templateFileName,

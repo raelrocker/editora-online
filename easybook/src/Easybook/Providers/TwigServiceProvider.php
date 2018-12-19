@@ -11,25 +11,25 @@
 
 namespace Easybook\Providers;
 
-use Easybook\DependencyInjection\Application;
-use Easybook\DependencyInjection\ServiceProviderInterface;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Easybook\Util\Toolkit;
 use Easybook\Util\TwigCssExtension;
 
 class TwigServiceProvider implements ServiceProviderInterface
 {
-    public function register(Application $app)
+    public function register(Container $app)
     {
         $app['twig.options'] = array(
-            'autoescape'       => false,
+            'autoescape' => false,
             // 'cache'         => $app['app.dir.cache'].'/Twig',
-            'charset'          => $app['app.charset'],
-            'debug'            => $app['app.debug'],
+            'charset' => $app['app.charset'],
+            'debug' => $app['app.debug'],
             'strict_variables' => $app['app.debug'],
         );
 
-        $app['twig.loader'] = $app->share(function() use ($app) {
-            $theme  = ucfirst($app->edition('theme'));
+        $app['twig.loader'] = function () use ($app) {
+            $theme = ucfirst($app->edition('theme'));
             $format = Toolkit::camelize($app->edition('format'), true);
 
             $loader = new \Twig_Loader_Filesystem($app['app.dir.themes']);
@@ -76,15 +76,15 @@ class TwigServiceProvider implements ServiceProviderInterface
             }
 
             return $loader;
-        });
+        };
 
-        $app['twig'] = $app->share(function() use ($app) {
+        $app['twig'] = function () use ($app) {
             $twig = new \Twig_Environment($app['twig.loader'], $app['twig.options']);
             $twig->addExtension(new TwigCssExtension());
 
             $twig->addGlobal('app', $app);
 
-            if (null != $bookConfig = $app['publishing.book.config']) {
+            if (null !== $bookConfig = $app['publishing.book.config']) {
                 $twig->addGlobal('book', $bookConfig['book']);
 
                 $publishingEdition = $app['publishing.edition'];
@@ -93,6 +93,6 @@ class TwigServiceProvider implements ServiceProviderInterface
             }
 
             return $twig;
-        });
+        };
     }
 }

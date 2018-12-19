@@ -42,36 +42,17 @@ class BookCustomizeCommandTest extends \PHPUnit_Framework_TestCase
 
         // generate a sample book before testing its customization
         $command = $this->console->find('new');
-        $tester  = new CommandTester($command);
+        $tester = new CommandTester($command);
         $tester->execute(array(
             'command' => $command->getName(),
-            'title'   => 'The Origin of Species',
-            '--dir'   => $this->tmpDir
+            'title' => 'The Origin of Species',
+            '--dir' => $this->tmpDir,
         ));
     }
 
     public function tearDown()
     {
         $this->filesystem->remove($this->tmpDir);
-    }
-
-    public function testCommandDisplaysApplicationSignature()
-    {
-        $command = $this->console->find('customize');
-
-        $tester  = new CommandTester($command);
-        $tester->execute(array(
-            'command' => $command->getName(),
-            'slug'    => 'the-origin-of-species',
-            'edition' => 'web',
-            '--dir'   => $this->tmpDir
-        ));
-
-        $app = $command->getApp();
-
-        $this->assertContains($app['app.signature'], $command->asText(),
-            'The command text description displays the application signature.'
-        );
     }
 
     public function testInteractiveCommand()
@@ -85,12 +66,12 @@ class BookCustomizeCommandTest extends \PHPUnit_Framework_TestCase
         $helper = new HelperSet(array(new FormatterHelper(), $dialog));
         $command->setHelperSet($helper);
 
-        $tester  = new CommandTester($command);
+        $tester = new CommandTester($command);
         $tester->execute(array(
             'command' => $command->getName(),
-            '--dir'   => $this->tmpDir
+            '--dir' => $this->tmpDir,
         ), array(
-            'interactive' => true
+            'interactive' => true,
         ));
 
         $app = $command->getApp();
@@ -131,14 +112,7 @@ class BookCustomizeCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonInteractiveCommand($edition)
     {
-        $command = $this->console->find('customize');
-        $tester  = new CommandTester($command);
-        $tester->execute(array(
-            'command' => $command->getName(),
-            'slug'    => 'the-origin-of-species',
-            'edition' => $edition,
-            '--dir'   => $this->tmpDir
-        ));
+        $tester = $this->customizeBook($edition);
 
         $this->assertContains(
             'You can now customize the book design with the following stylesheet',
@@ -171,52 +145,28 @@ class BookCustomizeCommandTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage ERROR: The directory of the book cannot be found.
+     */
     public function testNonInteractionInvalidBookAndEdition()
     {
-        $command = $this->console->find('customize');
-        $tester  = new CommandTester($command);
-
-        try {
-            $tester->execute(array(
-                'command' => $command->getName(),
-                'slug'    => uniqid('non_existent_book_'),
-                'edition' => uniqid('non_existent_edition_'),
-                '--dir'   => $this->tmpDir,
-                '--no-interaction' => true
-            ), array(
-                'interactive' => false
-            ));
-        } catch (\RuntimeException $e) {
-            $this->assertInstanceOf('RuntimeException', $e);
-            $this->assertContains('The directory of the book cannot be found', $e->getMessage());
-        }
+        $this->customizeBook(uniqid('non_existent_edition_'), uniqid('non_existent_book_'));
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessageRegExp /ERROR: The '.*' edition isn't defined for\n'The Origin of Species' book./
+     */
     public function testNonInteractionInvalidEdition()
     {
-        $command = $this->console->find('customize');
-        $tester  = new CommandTester($command);
-
-        try {
-            $tester->execute(array(
-                'command' => $command->getName(),
-                'slug'    => 'the-origin-of-species',
-                'edition' => uniqid('non_existent_edition_'),
-                '--dir'   => $this->tmpDir,
-                '--no-interaction' => true
-            ), array(
-                'interactive' => false
-            ));
-        } catch (\RuntimeException $e) {
-             $this->assertInstanceOf('RuntimeException', $e);
-             $this->assertContains('edition isn\'t defined', $e->getMessage());
-        }
+        $this->customizeBook(uniqid('non_existent_edition_'));
     }
 
     public function testFailingCustomizationforABookThatAlreadyContainsCustomStyles()
     {
         if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
-            $this->markTestSkipped("This test executes commands not available for Windows systems.");
+            $this->markTestSkipped('This test executes commands not available for Windows systems.');
         }
 
         // this configuration creates a 'style.css' file to simulate that the
@@ -226,40 +176,40 @@ class BookCustomizeCommandTest extends \PHPUnit_Framework_TestCase
                 'editions' => array(
                     'web' => array(
                         'before_publish' => array(
-                            "mkdir -p Resources/Templates/web/",
-                            "touch Resources/Templates/web/style.css",
-                        )
-                    )
-                )
-            )
+                            'mkdir -p Resources/Templates/web/',
+                            'touch Resources/Templates/web/style.css',
+                        ),
+                    ),
+                ),
+            ),
         );
 
         // publish the sample book before testing its customization
         $command = $this->console->find('publish');
-        $tester  = new CommandTester($command);
+        $tester = new CommandTester($command);
         $tester->execute(array(
             'command' => $command->getName(),
-            'slug'    => 'the-origin-of-species',
+            'slug' => 'the-origin-of-species',
             'edition' => 'web',
-            '--dir'   => $this->tmpDir,
-            '--configuration' => json_encode($bookConfigurationViaCommand)
+            '--dir' => $this->tmpDir,
+            '--configuration' => json_encode($bookConfigurationViaCommand),
         ));
 
         $command = $this->console->find('customize');
-        $tester  = new CommandTester($command);
+        $tester = new CommandTester($command);
 
         try {
             $tester->execute(array(
                 'command' => $command->getName(),
-                'slug'    => 'the-origin-of-species',
+                'slug' => 'the-origin-of-species',
                 'edition' => 'web',
-                '--dir'   => $this->tmpDir
+                '--dir' => $this->tmpDir,
             ), array(
-                'interactive' => false
+                'interactive' => false,
             ));
         } catch (\RuntimeException $e) {
-             $this->assertInstanceOf('RuntimeException', $e);
-             $this->assertContains('edition already contains a custom CSS stylesheet', $e->getMessage());
+            $this->assertInstanceOf('RuntimeException', $e);
+            $this->assertContains('edition already contains a custom CSS stylesheet', $e->getMessage());
         }
     }
 
@@ -271,5 +221,25 @@ class BookCustomizeCommandTest extends \PHPUnit_Framework_TestCase
         rewind($stream);
 
         return $stream;
+    }
+
+    /**
+     * @return CommandTester
+     */
+    private function customizeBook($edition = 'web', $slug = 'the-origin-of-species')
+    {
+        $command = $this->console->find('customize');
+        $tester = new CommandTester($command);
+
+        $tester->execute(array(
+            'command' => $command->getName(),
+            'slug' => $slug,
+            'edition' => $edition,
+            '--dir' => $this->tmpDir,
+        ), array(
+            'interactive' => false,
+        ));
+
+        return $tester;
     }
 }

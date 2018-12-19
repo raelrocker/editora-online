@@ -25,10 +25,10 @@ class PermissionReader
     {
 
         $controllersClasses = $this->getControllers();
+//        dd($controllersClasses);
         $declared = get_declared_classes();
-
         $permissions = [];
-        foreach($declared as $className) {
+        foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             if (in_array($rc->getFileName(), $controllersClasses)) {
                 $permission = $this->getPermission($className);
@@ -46,14 +46,14 @@ class PermissionReader
         /** @var Controller $controllerAnnotation */
         $controllerAnnotation = $this->reader->getClassAnnotation($rc, Controller::class);
         $permissions = [];
-        if ($controllerAnnotation){
+        if ($controllerAnnotation) {
             $permission = [
                 'name' => $controllerAnnotation->name,
                 'description' => $controllerAnnotation->description
             ];
+            //Pegar todos os métodos do Controller
             $rcMethods = !$action ? $rc->getMethods() : [$rc->getMethod($action)];
-            foreach($rcMethods as $rcMethod) {
-
+            foreach ($rcMethods as $rcMethod) {
                 /** @var Action $actionAnnotation */
                 $actionAnnotation = $this->reader->getMethodAnnotation($rcMethod, Action::class);
                 if ($actionAnnotation) {
@@ -71,11 +71,10 @@ class PermissionReader
         $dirs = config('codeeduuser.acl.controllers_annotations');
         $config = include __DIR__ . '/../Config/config.local.php';
         $dirs = array_merge($dirs, $config['acl']['controllers_annotations']);
-
         $files = [];
-        foreach($dirs as $dir) {
-            
-            foreach(\File::allFiles($dir) as $file) {
+        foreach ($dirs as $dir) {
+            foreach (\File::allFiles($dir) as $file) {
+//                echo $file;
                 $files[] = $file->getRealPath();
                 require_once $file->getRealPath();
             }

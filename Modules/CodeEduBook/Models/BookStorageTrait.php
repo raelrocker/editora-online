@@ -29,6 +29,21 @@ trait BookStorageTrait
     {
         return "{$this->disk}/{$this->ebook_template}/{$this->cover_ebook_name}";
     }
+
+    public function getCoverKindleNameAttribute()
+    {
+        return 'cover.jpg';
+    }
+
+    public function getKindleTemplateAttribute()
+    {
+        return "{$this->id}/Resources/Templates/kindle";
+    }
+
+    public function getCoverKindleFileAttribute()
+    {
+        return "{$this->disk}/{$this->Kindle_template}/{$this->cover_Kindle_name}";
+    }
     
     public function getCoverPdfNameAttribute()
     {

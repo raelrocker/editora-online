@@ -69,7 +69,10 @@ class ApplicationTest extends TestCase
         }
     }
 
-    public function testHighlight()
+    /**
+     * @dataProvider provideHighlightFixtures
+     */
+    public function testHighlight($originalFilePath, $highlightedFilePath)
     {
         // mock the $app object to disable the highlight cache
         $app = $this->getMock('Easybook\DependencyInjection\Application', array('edition'));
@@ -77,19 +80,20 @@ class ApplicationTest extends TestCase
             ->method('edition')
             ->will($this->returnValue(null));
 
+        $languageToHighlight = substr(basename($originalFilePath), 0, -4);
+
+        $this->assertEquals(
+            file_get_contents($highlightedFilePath),
+            $app->highlight(file_get_contents($originalFilePath), $languageToHighlight),
+            'Code snippet is highlighted correctly.'
+        );
+    }
+
+    public function provideHighlightFixtures()
+    {
         $fixturesDir = __DIR__.'/fixtures/highlight';
 
-        $this->assertEquals(
-            file_get_contents($fixturesDir.'/highlighted_html_snippet.txt'),
-            $app->highlight(file_get_contents($fixturesDir.'/raw_html_snippet.txt'), 'html'),
-            'HTML code snippet is highlighted correctly.'
-        );
-
-        $this->assertEquals(
-            file_get_contents($fixturesDir.'/highlighted_php_snippet.txt'),
-            $app->highlight(file_get_contents($fixturesDir.'/raw_php_snippet.txt'), 'php'),
-            'PHP code snippet is highlighted correctly.'
-        );
+        return array_map(null, glob($fixturesDir.'/input/*.txt'), glob($fixturesDir.'/output/*.txt'));
     }
 
     public function testBookMethodShortcut()
@@ -97,8 +101,8 @@ class ApplicationTest extends TestCase
         $app = new Application();
         $app['publishing.book.config'] = array(
             'book' => array(
-                'title' => 'The title of the book'
-            )
+                'title' => 'The title of the book',
+            ),
         );
 
         $this->assertEquals('The title of the book', $app->book('title'));
@@ -122,10 +126,10 @@ class ApplicationTest extends TestCase
             'book' => array(
                 'editions' => array(
                     'my_edition' => array(
-                        'format' => 'pdf'
-                    )
-                )
-            )
+                        'format' => 'pdf',
+                    ),
+                ),
+            ),
         );
 
         $this->assertEquals('pdf', $app->edition('format'));
@@ -134,17 +138,16 @@ class ApplicationTest extends TestCase
         $this->assertEquals('epub', $app->edition('format'));
     }
 
+    /**
+     * @expectedException PHPUnit_Framework_Error_Deprecated
+     * @expectedExceptionMessage The "publishing.id" option is deprecated
+     */
     public function testDeprecatedPublishingIdProperty()
     {
         $app = new Application();
         $app['publishing.edition.id'] = 'custom_edition_id';
 
-        try {
-            $id = $app['publishing.id'];
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('PHPUnit_Framework_Error_Deprecated', $e);
-            $this->assertContains('The "publishing.id" option is deprecated', $e->getMessage());
-        }
+        $id = $app['publishing.id'];
     }
 
     /**
@@ -157,7 +160,7 @@ class ApplicationTest extends TestCase
         // needed to simulate the third-party libraries required
         // to publish PDF and MOBI books
         $app['kindlegen.path'] = __FILE__;
-        $app['prince.path']    = __FILE__;
+        $app['prince.path'] = __FILE__;
 
         $app['publishing.edition'] = 'my_edition';
 
@@ -165,10 +168,10 @@ class ApplicationTest extends TestCase
             'book' => array(
                 'editions' => array(
                     'my_edition' => array(
-                        'format' => $outputformat
-                    )
-                )
-            )
+                        'format' => $outputformat,
+                    ),
+                ),
+            ),
         );
 
         $this->assertInstanceOf($publisherClassName, $app['publisher']);
@@ -185,6 +188,10 @@ class ApplicationTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Unknown "this_format_does_not_exist" format
+     */
     public function testUnsupportedPublisher()
     {
         $app = new Application();
@@ -194,34 +201,30 @@ class ApplicationTest extends TestCase
             'book' => array(
                 'editions' => array(
                     'my_edition' => array(
-                        'format' => 'this_format_does_not_exist'
-                    )
-                )
-            )
+                        'format' => 'this_format_does_not_exist',
+                    ),
+                ),
+            ),
         );
 
-        try {
-            $publisher = $app['publisher'];
-        } catch (\RuntimeException $e) {
-            $this->assertContains('Unknown "this_format_does_not_exist" format', $e->getMessage());
-        }
+        $publisher = $app['publisher'];
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage (easybook only supports Markdown)
+     */
     public function testUnsupportedContentFormat()
     {
         $app = new Application();
         $app['publishing.active_item'] = array(
             'config' => array(
-                'format'  => 'this_format_does_not_exist',
-                'content' => 'test_chapter'
-            )
+                'format' => 'this_format_does_not_exist',
+                'content' => 'test_chapter',
+            ),
         );
 
-        try {
-            $parser = $app['parser'];
-        } catch (\RuntimeException $e) {
-            $this->assertContains('(easybook only supports Markdown)', $e->getMessage());
-        }
+        $parser = $app['parser'];
     }
 
     public function testGetTitleMethodForDefaultTitles()
@@ -260,13 +263,13 @@ class ApplicationTest extends TestCase
 
         $labelVariables = array(
             'item' => array(
-                'number'   => 1,
+                'number' => 1,
                 'counters' => array(1, 1, 1, 1, 1, 1),
-                'level'    => 1
+                'level' => 1,
             ),
             'element' => array(
-                'number' => 1
-            )
+                'number' => 1,
+            ),
         );
 
         foreach ($files as $file) {
@@ -288,7 +291,7 @@ class ApplicationTest extends TestCase
                 if (is_array($value)) {
                     foreach ($value as $i => $subLabel) {
                         $expectedValue = $app->renderString($subLabel, $labelVariables);
-                        $labelVariables['item']['level'] = $i+1;
+                        $labelVariables['item']['level'] = $i + 1;
 
                         $this->assertEquals($expectedValue, $app->getLabel($key, $labelVariables));
                     }
@@ -361,7 +364,7 @@ class ApplicationTest extends TestCase
             array('key3', 'string'),
             array('key4', 3),
             array('key5', 3.141592),
-            array('key6', array(1, 2, 3))
+            array('key6', array(1, 2, 3)),
         );
     }
 }

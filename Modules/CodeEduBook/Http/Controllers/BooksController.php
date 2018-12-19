@@ -158,13 +158,23 @@ class BooksController extends Controller
         $request->session()->flash('message', 'Cover adicionado com sucesso.');
         return redirect()->to($url);
     }
-    
+
+    /**
+     * @Permission\Action(name="export", description="Exportação de Livros")
+     * @param Book $book
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function export(Book $book)
     {
         dispatch(new GenerateBook($book));
         return redirect()->route('books.index');
     }
-    
+
+    /**
+     * @Permission\Action(name="download", description="Download de Livros")
+     * @param Book $book
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function download(Book $book)
     {
         return response()->download($book->zip_file);
