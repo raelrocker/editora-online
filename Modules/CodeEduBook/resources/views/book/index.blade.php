@@ -34,14 +34,11 @@
                                             ->addAttributes([
                                                 'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteFormId}\").submit();"
                                             ]);
-                        $exportFormId = "export-form-{$book->id}";
-                        $exportForm = Form::open([
-                                        'route' => ['books.export', 'book' => $book->id],
-                                        'method' => 'POST', 'id' => $exportFormId, 'style' => 'display: none']) .
-                                      Form::close();
-                         $anchorExport = Button::link('Exportar')->asLinkTo($linkExport)
+
+
+                         $anchorExport = Button::link('Exportar')
                                             ->addAttributes([
-                                                'onclick' => "event.preventDefault(); document.getElementById(\"{$exportFormId}\").submit();"
+                                                'onclick' => "exportBook(\"$linkExport\");"
                                             ]);
                         return "<ul class=\"list-inline\">" .
                                   "<li>" . $anchorExport . "<li>" .
@@ -54,7 +51,7 @@
                                   "<li>|</li>" .
                                   "<li>" . $anchorDestroy . "<li>" .
                                "</ul>" .
-                               $deleteForm . $exportForm;
+                               $deleteForm;
                     })
             !!}
 
@@ -62,3 +59,20 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        function exportBook(route){
+            window.$.ajax({
+                url: route,
+                method: 'POST',
+                data: {
+                  _token: window.Laravel.csrfToken
+                },
+                success: function(data){
+                    window.$.notify({message: 'O processo de exportação foi iniciado.'},{type: 'success'});
+                }
+            });
+        }
+    </script>
+@endpush

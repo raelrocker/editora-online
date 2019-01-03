@@ -76,7 +76,7 @@ class BookExported extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'book' => $this->book->toArray()
         ];
     }
 }

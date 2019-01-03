@@ -181,7 +181,7 @@ return [
          */
         CodePub\Providers\AppServiceProvider::class,
         CodePub\Providers\AuthServiceProvider::class,
-        // CodePub\Providers\BroadcastServiceProvider::class,
+        CodePub\Providers\BroadcastServiceProvider::class,
         CodePub\Providers\EventServiceProvider::class,
         CodePub\Providers\RouteServiceProvider::class,
         CodePub\Providers\RepositoryServiceProvider::class,
@@ -261,7 +261,8 @@ return [
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
         'PermissionReader' => \CodeEduUser\Facade\PermissionReader::class,
         'NavbarAuthorization' => \CodeEduUser\Facade\NavbarAuthorization::class,
-        'Image' => \Folklore\Image\Facades\Image::class
+        'Image' => \Folklore\Image\Facades\Image::class,
+        'Pusher' => \Pusher\Pusher::class,
     ],
 
 ];
