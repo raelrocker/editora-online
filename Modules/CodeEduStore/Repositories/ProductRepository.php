@@ -12,4 +12,6 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface ProductRepository extends RepositoryInterface, RepositoryCriteriaInterface
 {
     public function home();
+
+    public function findByCategory($id);
 }

@@ -2,6 +2,7 @@
 
 namespace CodeEduStore\Http\Controllers;
 
+use CodeEduStore\Repositories\CategoryRepository;
 use CodeEduStore\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,14 +14,20 @@ class StoreController extends Controller
      * @var ProductRepository
      */
     private $productRepository;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
      * StoreController constructor.
      * @param ProductRepository $productRepository
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
 
@@ -32,6 +39,17 @@ class StoreController extends Controller
     {
         $products = $this->productRepository->home();
         return view('codeedustore::store.home', compact('products'));
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function category($id)
+    {
+        $category = $this->categoryRepository->find($id);
+        $products = $this->productRepository->findByCategory($id);
+        return view('codeedustore::store.category', compact(['products', 'category']));
     }
 
     /**
