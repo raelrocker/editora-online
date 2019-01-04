@@ -82,11 +82,12 @@
                 ])->right();
                 $navbar->withContent($links)->withContent($logout);
             } else {
-                $formSearch = Form::open(['url' => url('/'), 'class' => 'form-inline form-search', 'method' => 'GET']) .
+                $formSearch = Form::open(['url' => route('store.search'), 'class' => 'form-inline form-search navbar-right', 'method' => 'GET']) .
                               Html::openFormGroup() .
                               InputGroup::withContents(Form::text('search', null, ['class' => 'form-control']))
                                 ->append(Form::submit('', ['class' => 'btn-search'])) .
-                              Form::close();
+                            Html::closeFormGroup() .
+                Form::close();
 
                 $menuRight = Navigation::pills([
 

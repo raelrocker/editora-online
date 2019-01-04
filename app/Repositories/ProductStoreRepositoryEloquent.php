@@ -32,4 +32,9 @@ class ProductStoreRepositoryEloquent extends BookRepositoryEloquent implements P
         $this->categoryRepository = app(CategoryRepository::class);
         parent::boot();
     }
+
+    public function like($search)
+    {
+        return $this->model->where('title', 'like', "%$search%")->where('published', 1)->get();
+    }
 }

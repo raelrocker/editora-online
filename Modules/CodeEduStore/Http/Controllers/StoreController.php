@@ -52,6 +52,13 @@ class StoreController extends Controller
         return view('codeedustore::store.category', compact(['products', 'category']));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $products = $this->productRepository->like($search);
+        return view('codeedustore::store.search', compact('products'));
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Response
