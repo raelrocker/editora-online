@@ -2,6 +2,7 @@
 
 namespace CodeEduStore\Http\Controllers;
 
+use CodeEduStore\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -9,12 +10,28 @@ use Illuminate\Routing\Controller;
 class StoreController extends Controller
 {
     /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    /**
+     * StoreController constructor.
+     * @param ProductRepository $productRepository
+     */
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
+
+    /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('codeedustore::store.home');
+        $products = $this->productRepository->home();
+        return view('codeedustore::store.home', compact('products'));
     }
 
     /**
