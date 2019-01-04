@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/store.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -24,7 +24,9 @@
 <body>
     <div id="app">
         <?php
-            $navbar = Navbar::withBrand(config('app.name'), url('/'))->inverse();
+            $appName = config('app.name');
+
+            $navbar = Navbar::withBrand("<img src=\"img/logo.png\" title=\"$appName\" alt=\"$appName\">", url('/'));
             if (Auth::check()) {
                 $arrayLinks = [
                     [
@@ -79,6 +81,31 @@
                     ]
                 ])->right();
                 $navbar->withContent($links)->withContent($logout);
+            } else {
+                $formSearch = Form::open(['url' => url('/'), 'class' => 'form-inline form-search', 'method' => 'GET']) .
+                              Html::openFormGroup() .
+                              InputGroup::withContents(Form::text('search', null, ['class' => 'form-control']))
+                                ->append(Form::submit('', ['class' => 'btn-search'])) .
+                              Form::close();
+
+                $menuRight = Navigation::pills([
+
+                        [
+                                'link' => url('/logout'),
+                                'title' => 'Registrar',
+                                'linkAttributes' => [
+                                        'class' => "btnnew btnnew-default"
+                                ]
+                        ],
+                        [
+                                'link' => url('/logout'),
+                                'title' => 'Login',
+                                'linkAttributes' => [
+                                        'class' => "btnnew btnnew-default"
+                                ]
+                        ]
+                ])->right()->render();
+                $navbar->withContent($menuRight)->withContent("<div>$formSearch</div>");
             }
         ?>
         {!! $navbar !!}
@@ -97,8 +124,16 @@
             </div>
         @endif
 
-        @yield('content')
+        @yield('banner')
+        @yield('menu')
+        <section>
+            @yield('content')
+        </section>
+
     </div>
+    <footer class="text-center">
+        <p>@CodePub {{date('Y')}}</p>
+    </footer>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>

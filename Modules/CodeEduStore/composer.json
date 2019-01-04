@@ -1,0 +1,15 @@
+{
+    "name": "codeedu/codeedustore",
+    "description": "",
+    "authors": [
+        {
+            "name": "Israel Jardim",
+            "email": "israjardim21@@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "\\CodeEduStore\\": ""
+        }
+    }
+}
