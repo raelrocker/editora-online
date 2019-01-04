@@ -59,6 +59,12 @@ class StoreController extends Controller
         return view('codeedustore::store.search', compact('products'));
     }
 
+    public function showProduct($slug)
+    {
+        $product = $this->productRepository->findBySlug($slug);
+        return view('codeedustore::store.show-product', compact('product'));
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Response

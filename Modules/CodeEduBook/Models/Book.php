@@ -5,6 +5,8 @@ namespace CodeEduBook\Models;
 use Bootstrapper\Interfaces\TableInterface;
 use CodeEduBook\Models\Category;
 use Collective\Html\Eloquent\FormAccessible;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,7 +20,11 @@ class Book extends Model implements TableInterface
     
     use BookThumbnailTrait;
 
+    use SluggableScopeHelpers;
+
     protected $dates = ['deleted_at'];
+
+    use Sluggable;
 
 
     protected $fillable = [
@@ -43,9 +49,22 @@ class Book extends Model implements TableInterface
         return $this->belongsToMany(Category::class)->withTrashed();
     }
 
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
+
     public function formCategoriesAttribute()
     {
         return $this->categories->pluck('id')->all();
+    }
+
+    public function sluggable() {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
     /**

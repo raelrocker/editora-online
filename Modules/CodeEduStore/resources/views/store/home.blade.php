@@ -14,7 +14,7 @@
         <div class="col-md-12">
             @foreach($products as $product)
                 <div class="col-md-3 book-home">
-                    <a href="" class="book-thumbnail">
+                    <a href="{{route('store.show-product', ['slug' => $product->slug])}}" class="book-thumbnail">
                         <img src="{{asset($product->thumbnail_small_relative)}}" alt="{{$product->title}}" />
                     </a>
                 </div>

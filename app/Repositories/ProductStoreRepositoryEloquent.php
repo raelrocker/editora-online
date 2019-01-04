@@ -37,4 +37,9 @@ class ProductStoreRepositoryEloquent extends BookRepositoryEloquent implements P
     {
         return $this->model->where('title', 'like', "%$search%")->where('published', 1)->get();
     }
+
+    public function findBySlug($slug)
+    {
+        return $this->model->findBySlugOrFail($slug);
+    }
 }

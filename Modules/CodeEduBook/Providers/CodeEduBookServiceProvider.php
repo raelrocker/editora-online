@@ -3,6 +3,7 @@
 namespace CodeEduBook\Providers;
 
 use CodePub\Providers\RepositoryServiceProvider;
+use Cviebrock\EloquentSluggable\ServiceProvider as SluggableServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Folklore\Image\ImageServiceProvider;
 
@@ -40,6 +41,7 @@ class CodeEduBookServiceProvider extends ServiceProvider
         $this->app->register(\CodeEduBook\Providers\RepositoryServiceProvider::class);
         $this->app->register(\CodeEduBook\Providers\AuthServiceProvider::class);
         $this->app->register(ImageServiceProvider::class);
+        $this->app->register(SluggableServiceProvider::class);
     }
 
     /**
