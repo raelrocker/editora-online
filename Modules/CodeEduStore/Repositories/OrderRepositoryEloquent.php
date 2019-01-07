@@ -2,7 +2,7 @@
 
 namespace CodeEduStore\Repositories;
 
-//use CodeEduStore\Events\OrderPostProcessEvent;
+use CodeEduStore\Events\OrderPostProcessEvent;
 use CodeEduStore\Models\Order;
 use CodeEduStore\Models\ProducStore;
 use CodeEduUser\Models\User;
@@ -55,7 +55,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
         //Relacionar order com o produto
         $order->orderable()->associate($productStore->getProductOriginal());
         $order->save();
-        //event(new OrderPostProcessEvent($order));
+        event(new OrderPostProcessEvent($order));
 
         /** @var ProducStore $order */
         return $order;

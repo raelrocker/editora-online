@@ -3,6 +3,7 @@
 namespace CodeEduBook\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
+use CodeEduBook\Events\BookPreIndexEvent;
 use CodeEduBook\Models\Category;
 use Collective\Html\Eloquent\FormAccessible;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -111,6 +112,9 @@ class Book extends Model implements TableInterface
         return 'meu Indíce de Livros';
     }
 
+    /**
+     * @return array
+     */
     public function toSearchableArray()
     {
         $array = $this->toArray();
