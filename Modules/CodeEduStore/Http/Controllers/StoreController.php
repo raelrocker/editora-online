@@ -3,6 +3,7 @@
 namespace CodeEduStore\Http\Controllers;
 
 use CodeEduStore\Repositories\CategoryRepository;
+use CodeEduStore\Repositories\OrderRepository;
 use CodeEduStore\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,16 +19,22 @@ class StoreController extends Controller
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var OrderRepository
+     */
+    private $orderRepository;
 
     /**
      * StoreController constructor.
      * @param ProductRepository $productRepository
      * @param CategoryRepository $categoryRepository
+     * @param OrderRepository $orderRepository
      */
-    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
+    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository, OrderRepository $orderRepository)
     {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->orderRepository = $orderRepository;
     }
 
 

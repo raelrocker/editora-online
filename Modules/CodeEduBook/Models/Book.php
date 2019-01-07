@@ -9,6 +9,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Book extends Model implements TableInterface
 {
@@ -21,6 +22,8 @@ class Book extends Model implements TableInterface
     use BookThumbnailTrait;
 
     use SluggableScopeHelpers;
+
+    use Searchable;
 
     protected $dates = ['deleted_at'];
 
