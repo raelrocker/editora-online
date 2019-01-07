@@ -3,6 +3,7 @@
 namespace CodePub\Repositories;
 
 use CodeEduBook\Repositories\BookRepositoryEloquent;
+use CodeEduStore\Models\ProductStore;
 use CodeEduStore\Repositories\CategoryRepository;
 use CodeEduStore\Repositories\ProductRepository;
 
@@ -18,8 +19,8 @@ class ProductStoreRepositoryEloquent extends BookRepositoryEloquent implements P
 
     public function home()
     {
-        //return $this->model->where('published', 1)->paginate(12)->items();
-        return $this->model->search("")->take(12)->get();
+        return $this->model->where('published', 1)->paginate(12)->items();
+        //return $this->model->search("")->take(12)->get();
     }
 
     public function findByCategory($id)

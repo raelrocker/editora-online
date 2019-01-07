@@ -75,6 +75,10 @@
                                 'title' => "Minhas Compras"
                             ],
                             [
+                                    'link' => route('store.invoices'),
+                                    'title' => 'My Invoices'
+                            ],
+                            [
                                 'link' => url('/logout'),
                                 'title' => 'Logout',
                                 'linkAttributes' => [

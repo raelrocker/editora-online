@@ -3,6 +3,7 @@
 namespace CodeEduStore\Repositories;
 
 use CodeEduStore\Models\ProducStore;
+use CodeEduStore\Models\ProductStore;
 use Prettus\Repository\Contracts\RepositoryCriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
@@ -20,5 +21,5 @@ interface OrderRepository extends
      * @param ProducStore $productStore
      * @return mixed
      */
-    public function process($token, $user, ProducStore $productStore);
+    public function process($token, $user, ProductStore $productStore);
 }

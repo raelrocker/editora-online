@@ -5,6 +5,7 @@ namespace CodeEduStore\Repositories;
 use CodeEduStore\Events\OrderPostProcessEvent;
 use CodeEduStore\Models\Order;
 use CodeEduStore\Models\ProducStore;
+use CodeEduStore\Models\ProductStore;
 use CodeEduUser\Models\User;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -38,21 +39,20 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
      * @return ProducStore|mixed
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function process($token, $user, ProducStore $productStore)
+    public function process($token, $user, ProductStore $productStore)
     {
         //$this->createCustomer($token, $user);
         /** @var Invoice $invoice */
         /** @var User $user */
-        /*
+
         $invoice = $user->invoiceFor(
             "{$productStore->getId()} {$productStore->getName()}",
             $productStore->getPrice() * 100);
-        */
         $order = $this->create([
             'date_launch' => (new \DateTime())->format('Y-m-d'),
             'price' => $productStore->getPrice(),
             'user_id' => $user->id,
-            'invoice_id' => 'asdasdas'
+            'invoice_id' => $invoice->id
         ]);
         //Relacionar order com o produto
         $order->orderable()->associate($productStore->getProductOriginal());

@@ -81,7 +81,7 @@ class StoreController extends Controller
 
     public function process(Request $request, $id)
     {
-        dd($request->all());
+
         $productStore = $this->productRepository->makeProductStore($id);
         $user = $request->user();
         $token = $request->get('stripeToken');
@@ -100,5 +100,12 @@ class StoreController extends Controller
     {
         $orders = $this->orderRepository->all();
         return view('codeedustore::store.orders', compact('orders'));
+    }
+
+    public function invoices(Request $request)
+    {
+        $user = $request->user();
+        $invoices = $user->invoices();
+        return view('codeedustore::store.invoices', compact('invoices'));
     }
 }
