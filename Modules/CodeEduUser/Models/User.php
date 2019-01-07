@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Collective\Html\Eloquent\FormAccessible;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements TableInterface
 {
     use Notifiable;
     use SoftDeletes;
     use FormAccessible;
+    use Billable;
 
     protected $dates = ['deleted_at'];
 
