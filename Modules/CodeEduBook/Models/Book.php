@@ -113,7 +113,11 @@ class Book extends Model implements TableInterface
 
     public function toSearchableArray()
     {
-        
+        $array = $this->toArray();
+        $event = new BookPreIndexEvent($this);
+        event($event);
+        $array = array_merge($array, ['ranking' => $event->getRanking()]);
+        return $array;
     }
 
 }
