@@ -6,7 +6,7 @@ use CodePub\Events\CodeEduBook\Events\BookPreIndexEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class BookMostSaled
+class BookMakeTotal
 {
     /**
      * @var OrderRepository

@@ -24,7 +24,7 @@ class BookRankingUpdate
      */
     public function handle(OrderPostProcessEvent $event)
     {
-        $model = $event->getOrder();
-        $model->orderable->searchable();
+        $order = $event->getOrder();
+        $order->orderable->searchable();
     }
 }

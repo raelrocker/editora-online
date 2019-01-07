@@ -40,17 +40,19 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
      */
     public function process($token, $user, ProducStore $productStore)
     {
-        $this->createCustomer($token, $user);
+        //$this->createCustomer($token, $user);
         /** @var Invoice $invoice */
         /** @var User $user */
+        /*
         $invoice = $user->invoiceFor(
             "{$productStore->getId()} {$productStore->getName()}",
             $productStore->getPrice() * 100);
+        */
         $order = $this->create([
             'date_launch' => (new \DateTime())->format('Y-m-d'),
             'price' => $productStore->getPrice(),
             'user_id' => $user->id,
-            'invoice_id' => $invoice->id
+            'invoice_id' => 'asdasdas'
         ]);
         //Relacionar order com o produto
         $order->orderable()->associate($productStore->getProductOriginal());
