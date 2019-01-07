@@ -26,5 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        \Gate::define('book-download', function ($user, $bookId) {
+            $orderRepository = app(OrderRepository::class);
+            $order = $orderRepository->findByField('orderable_id', $bookId)->first();
+            return !$order ? true : false;
+        });
     }
 }

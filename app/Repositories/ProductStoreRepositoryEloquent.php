@@ -42,4 +42,15 @@ class ProductStoreRepositoryEloquent extends BookRepositoryEloquent implements P
     {
         return $this->model->findBySlugOrFail($slug);
     }
+
+    public function makeProductStore($id)
+    {
+        $book = $this->find($id);
+        $productStore = new ProductStore();
+        $productStore->setId($book->id)
+            ->setName($book->title)
+            ->setPrice($book->price)
+            ->setProductOriginal($book);
+        return $productStore;
+    }
 }

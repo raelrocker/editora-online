@@ -18,4 +18,6 @@ interface ProductRepository extends RepositoryInterface, RepositoryCriteriaInter
     public function like($search);
 
     public function findBySlug($slug);
+
+    public function makeProductStore($id);
 }

@@ -4,6 +4,8 @@ namespace CodeEduStore\Providers;
 
 //use CodeEduStore\Repositories\OrderRepository;
 //use CodeEduStore\Repositories\OrderRepositoryEloquent;
+use CodeEduStore\Repositories\OrderRepository;
+use CodeEduStore\Repositories\OrderRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -22,7 +24,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //$this->app->bind(OrderRepository::class, OrderRepositoryEloquent::class);
+        $this->app->bind(OrderRepository::class, OrderRepositoryEloquent::class);
     }
 
     /**

@@ -66,10 +66,14 @@
                     ]
                 ];
                 $links = Navigation::links(\NavbarAuthorization::getLinksAuthorized($arrayLinks));
-                $logout = Navigation::links([
+                $menuRight = Navigation::links([
                     [
                         Auth::user()->name,
                         [
+                            [
+                                'link' => route('store.orders'),
+                                'title' => "Minhas Compras"
+                            ],
                             [
                                 'link' => url('/logout'),
                                 'title' => 'Logout',
@@ -80,7 +84,7 @@
                         ]
                     ]
                 ])->right();
-                $navbar->withContent($links)->withContent($logout);
+                $navbar->withContent($links)->withContent($menuRight);
             } else {
                 $formSearch = Form::open(['url' => route('store.search'), 'class' => 'form-inline form-search navbar-right', 'method' => 'GET']) .
                               Html::openFormGroup() .

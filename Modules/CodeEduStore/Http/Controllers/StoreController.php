@@ -65,47 +65,33 @@ class StoreController extends Controller
         return view('codeedustore::store.show-product', compact('product'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    public function checkout($id)
     {
-        return view('codeedustore::create');
+        $product = $this->productRepository->find($id);
+        return view('codeedustore::store.checkout-product', compact('product'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
+
+    public function process(Request $request, $id)
     {
+        dd($request->all());
+        $productStore = $this->productRepository->makeProductStore($id);
+        $user = $request->user();
+        $token = $request->get('stripeToken');
+        try {
+            $order = $this->orderRepository->process($token, $user, $productStore);
+            $status = true;
+        } catch (Card $exception) {
+            $status = false;
+        }
+        return view('codeedustore::store.process', compact('order', 'status'));
+        //Efetuar oPagamento
+        //Renderizar sucesso ou fracasso, sif true-> download.
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
+    public function orders()
     {
-        return view('codeedustore::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
+        $orders = $this->orderRepository->all();
+        return view('codeedustore::store.orders', compact('orders'));
     }
 }
