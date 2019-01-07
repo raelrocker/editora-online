@@ -106,4 +106,14 @@ class Book extends Model implements TableInterface
         }
     }
 
+    public function searchable()
+    {
+        return 'meu Indíce de Livros';
+    }
+
+    public function toSearchableArray()
+    {
+        
+    }
+
 }
